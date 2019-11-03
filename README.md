@@ -1,6 +1,13 @@
 # Mobile Systems project
 
-### First start
+## To do:
+- [ ] Setup assets (colors, components)
+- [ ] Logging in
+- [ ] Dashboard view
+- [ ] Search view
+- [ ] expand this list
+
+## Getting started
 
 - Read and follow http://facebook.github.io/react-native/docs/getting-started to setup Android studio, proper PATHs and AVD emulator.
 - Create a `local.properties` file at `/android/` and include
