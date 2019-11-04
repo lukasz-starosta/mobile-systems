@@ -16,4 +16,4 @@
 sdk.dir=C:/Users/<YOUR_USERNAME>/AppData/Local/Android/Sdk
 ```
 - run `yarn install`
-- run `yarn start`
+- run `yarn start` (possibly you might have to run `yarn start:android`)
