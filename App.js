@@ -11,7 +11,7 @@
  */
 
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   ApplicationProvider,
   Button,
@@ -20,8 +20,9 @@ import {
   Layout,
   Text,
 } from 'react-native-ui-kitten';
-import {mapping, dark as theme} from '@eva-design/eva';
-import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import { mapping, light as theme } from '@eva-design/eva';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { Navigation } from './src/layout/bottom-navigation';
 
 /**
  * Use any valid `name` property from eva icons (e.g `github`, or `heart-outline`)
@@ -35,7 +36,7 @@ const App = () => (
     <ApplicationProvider mapping={mapping} theme={theme}>
       <Layout style={styles.container}>
         <Text style={styles.text} category="h1">
-          Siema z React Native skupione studenciaki
+          Politechnika ucka
         </Text>
         <Text style={styles.text} category="s1">
           Start with editing App.js to configure your App
@@ -46,6 +47,7 @@ const App = () => (
         <Button style={styles.likeButton} icon={HeartIcon}>
           LIKE
         </Button>
+        <Navigation />
       </Layout>
     </ApplicationProvider>
   </React.Fragment>
