@@ -1,83 +1,62 @@
 import React from 'react';
-import {
-  BottomNavigation,
-  BottomNavigationTab,
-  Icon,
-} from 'react-native-ui-kitten';
+import { Icon } from 'react-native-ui-kitten';
 
-const getIcon = (style, name, fill) => (
-  <Icon {...style} name={name} fill={fill} />
-);
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import DashboardScreen from '../screens/dashboard';
+import ExploreScreen from '../screens/explore';
+import FavoritesScreen from '../screens/favorites';
+import ProfileScreen from '../screens/profile';
 
-const getColorBasedOnSelected = selected => {
-  const politechnikaColor = '#750104';
-  const basicColor = '#606060';
-  return selected ? politechnikaColor : basicColor;
+const politechnikaColor = '#750104';
+const basicColor = '#606060';
+
+const routes = {
+  Dashboard: {
+    title: 'Tablica',
+    iconName: 'layout',
+  },
+  Explore: {
+    title: 'Przeglądaj',
+    iconName: 'compass-outline',
+  },
+  Favorites: {
+    title: 'Moje koła',
+    iconName: 'star-outline',
+  },
+  Profile: {
+    title: 'Profil',
+    iconName: 'person-outline',
+  },
 };
 
-export class Navigation extends React.Component {
-  state = {
-    selectedIndex: 0,
-  };
+const TabNavigator = createBottomTabNavigator(
+  {
+    Dashboard: { screen: DashboardScreen },
+    Explore: { screen: ExploreScreen },
+    Favorites: { screen: FavoritesScreen },
+    Profile: { screen: ProfileScreen },
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      const { routeName } = navigation.state;
+      return {
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+            name={routes[routeName].iconName}
+            width={25}
+            height={25}
+            fill={tintColor}
+          />
+        ),
+        title: routes[routeName].title,
+        tabBarOptions: {
+          activeTintColor: politechnikaColor,
+          inactiveTintColor: basicColor,
+        },
+      };
+    },
+  },
+);
 
-  onTabSelect = selectedIndex => {
-    this.setState({selectedIndex});
-  };
-
-  isTabSelected = tabIndex => tabIndex === this.state.selectedIndex;
-
-  render() {
-    return (
-      <BottomNavigation
-        style={{position: 'absolute', bottom: 0}}
-        selectedIndex={this.state.selectedIndex}
-        onSelect={this.onTabSelect}
-        appearance="noIndicator">
-        <BottomNavigationTab
-          title="Tablica"
-          titleStyle={{color: getColorBasedOnSelected(this.isTabSelected(0))}}
-          icon={style =>
-            getIcon(
-              style,
-              'layout',
-              getColorBasedOnSelected(this.isTabSelected(0)),
-            )
-          }
-        />
-        <BottomNavigationTab
-          title="Przeglądaj"
-          titleStyle={{color: getColorBasedOnSelected(this.isTabSelected(1))}}
-          icon={style =>
-            getIcon(
-              style,
-              'compass-outline',
-              getColorBasedOnSelected(this.isTabSelected(1)),
-            )
-          }
-        />
-        <BottomNavigationTab
-          title="Moje koła"
-          titleStyle={{color: getColorBasedOnSelected(this.isTabSelected(2))}}
-          icon={style =>
-            getIcon(
-              style,
-              'star-outline',
-              getColorBasedOnSelected(this.isTabSelected(2)),
-            )
-          }
-        />
-        <BottomNavigationTab
-          title="Profil"
-          titleStyle={{color: getColorBasedOnSelected(this.isTabSelected(3))}}
-          icon={style =>
-            getIcon(
-              style,
-              'person-outline',
-              getColorBasedOnSelected(this.isTabSelected(3)),
-            )
-          }
-        />
-      </BottomNavigation>
-    );
-  }
-}
+export default createAppContainer(TabNavigator);
