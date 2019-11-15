@@ -7,9 +7,7 @@ import DashboardScreen from '../screens/dashboard';
 import ExploreScreen from '../screens/explore';
 import FavoritesScreen from '../screens/favorites';
 import ProfileScreen from '../screens/profile';
-
-const politechnikaColor = '#750104';
-const basicColor = '#606060';
+import colors from '../constants/colors'
 
 const routes = {
   Dashboard: {
@@ -51,8 +49,8 @@ const TabNavigator = createBottomTabNavigator(
         ),
         title: routes[routeName].title,
         tabBarOptions: {
-          activeTintColor: politechnikaColor,
-          inactiveTintColor: basicColor,
+          activeTintColor: colors.politechnika,
+          inactiveTintColor: colors.basic,
         },
       };
     },

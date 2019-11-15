@@ -1,16 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
 import { mapping, light as theme } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import Navigation from './src/layout/bottom-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import firebase from 'firebase';
 
-const App = () => (
-  <React.Fragment>
-    <IconRegistry icons={EvaIconsPack} />
-    <ApplicationProvider mapping={mapping} theme={theme}>
-      <Navigation />
-    </ApplicationProvider>
-  </React.Fragment>
-);
+import SignUpScreen from './src/screens/sign-up';
+import SignInScreen from './src/screens/sign-in';
+import Navigation from './src/layout/bottom-navigation';
+import LoadingStatus from './src/components/loading';
+
+const App = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    var firebaseConfig = {
+      apiKey: 'AIzaSyA-07RYx1Xzvbvyf0OSEILlli3z1QbSQWY',
+      authDomain: 'mobile-systems.firebaseapp.com',
+      databaseURL: 'https://mobile-systems.firebaseio.com',
+      projectId: 'mobile-systems',
+      storageBucket: 'mobile-systems.appspot.com',
+      messagingSenderId: '220061413588',
+      appId: '1:220061413588:web:59c966e92a5f82781a4b41',
+      measurementId: 'G-97EMD3MPEQ',
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(authUser => {
+      setUser(authUser ? authUser : null);
+      setloading(false);
+    });
+  }, []);
+
+  const AppContainer = getAppContainer({
+    user: user,
+  });
+
+  return (
+    <>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider mapping={mapping} theme={theme}>
+        {loading ? <LoadingStatus /> : <AppContainer />}
+      </ApplicationProvider>
+    </>
+  );
+};
+
+const getAppContainer = passedProps => {
+  const Navigator = createStackNavigator(
+    {
+      SignUp: {
+        screen: SignUpScreen,
+      },
+      SignIn: {
+        screen: SignInScreen,
+      },
+      App: Navigation,
+    },
+    {
+      initialRouteName: passedProps.user ? 'App' : 'SignIn',
+      headerMode: 'none',
+    },
+  );
+
+  return createAppContainer(Navigator);
+};
 
 export default App;
