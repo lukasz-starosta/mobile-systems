@@ -1,15 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
 import { mapping, light as theme } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import firebase from 'firebase';
 
 import SignUpScreen from './src/screens/sign-up';
 import SignInScreen from './src/screens/sign-in';
 import Navigation from './src/layout/bottom-navigation';
 
 const App = () => {
+  useEffect(() => {
+    var firebaseConfig = {
+      apiKey: 'AIzaSyA-07RYx1Xzvbvyf0OSEILlli3z1QbSQWY',
+      authDomain: 'mobile-systems.firebaseapp.com',
+      databaseURL: 'https://mobile-systems.firebaseio.com',
+      projectId: 'mobile-systems',
+      storageBucket: 'mobile-systems.appspot.com',
+      messagingSenderId: '220061413588',
+      appId: '1:220061413588:web:59c966e92a5f82781a4b41',
+      measurementId: 'G-97EMD3MPEQ',
+    };
+    firebase.initializeApp(firebaseConfig);
+  }, []);
+
   const AppContainer = getAppContainer();
 
   return (
@@ -25,8 +40,8 @@ const App = () => {
 const getAppContainer = passedProps => {
   const Navigator = createStackNavigator(
     {
-      SignUp: { screen: props => <SignUpScreen {...props} {...passedProps}/> },
-      SignIn: { screen: props => <SignInScreen {...props} {...passedProps}/> },
+      SignUp: { screen: props => <SignUpScreen {...props} {...passedProps} /> },
+      SignIn: { screen: props => <SignInScreen {...props} {...passedProps} /> },
       App: Navigation,
     },
     {
