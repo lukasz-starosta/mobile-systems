@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({handleSignUp, user}) => {
   return (
     <View>
-      <Text>Hello potential user!</Text>
+      <Text>{user ? `Hello ${user.email}` : 'Hello potential user!'}</Text>
+      <Button title="Sign up!" onPress={() => {
+        handleSignUp("itsdzefer@gmail.com", "dzeferos")
+      }} />
     </View>
   );
 };

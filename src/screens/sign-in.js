@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
-const SignInScreen = () => {
+const SignInScreen = ({handleSignIn}) => {
   return (
     <View>
       <Text>Welcome back!</Text>
+      <Button title="Sign in!" onPress={() => {
+        handleSignIn("itsdzefer@gmail.com", "dzeferos")
+      }} />
     </View>
   );
 };

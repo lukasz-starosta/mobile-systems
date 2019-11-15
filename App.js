@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
 import { mapping, light as theme } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import firebase from 'firebase';
+import firebase, { auth } from 'firebase';
 
 import SignUpScreen from './src/screens/sign-up';
 import SignInScreen from './src/screens/sign-in';
 import Navigation from './src/layout/bottom-navigation';
+import LoadingStatus from './src/components/loading';
 
 const App = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setloading] = useState(true);
+
   useEffect(() => {
     var firebaseConfig = {
       apiKey: 'AIzaSyA-07RYx1Xzvbvyf0OSEILlli3z1QbSQWY',
@@ -23,15 +27,49 @@ const App = () => {
       measurementId: 'G-97EMD3MPEQ',
     };
     firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged(authUser => {
+      if (authUser) {
+        setUser(authUser);
+      } else {
+        setUser(null);
+      }
+      setloading(false);
+    });
   }, []);
 
-  const AppContainer = getAppContainer();
+  const handleSignUp = (email, password) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
+
+  const handleSignIn = (email, password) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(error => {
+        console.log(error.message);
+      });
+  };
+
+  const AppContainer = getAppContainer({
+    handleSignUp: handleSignUp,
+    handleSignIn: handleSignIn,
+    user: user,
+  });
 
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={theme}>
-        <AppContainer />
+        {loading ? (
+          <LoadingStatus />
+        ) : (
+          <AppContainer screenProps={handleSignIn} />
+        )}
       </ApplicationProvider>
     </>
   );
@@ -40,12 +78,24 @@ const App = () => {
 const getAppContainer = passedProps => {
   const Navigator = createStackNavigator(
     {
-      SignUp: { screen: props => <SignUpScreen {...props} {...passedProps} /> },
-      SignIn: { screen: props => <SignInScreen {...props} {...passedProps} /> },
+      SignUp: {
+        screen: props => (
+          <SignUpScreen
+            {...props}
+            handleSignUp={passedProps.handleSignUp}
+            user={passedProps.user}
+          />
+        ),
+      },
+      SignIn: {
+        screen: props => (
+          <SignInScreen {...props} handleSignIn={passedProps.handleSignIn} />
+        ),
+      },
       App: Navigation,
     },
     {
-      initialRouteName: 'SignUp',
+      initialRouteName: passedProps.user ? 'App' : 'SignIn',
       headerMode: 'none',
     },
   );
