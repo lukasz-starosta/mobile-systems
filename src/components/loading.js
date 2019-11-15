@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import colors from '../constants/colors'
 
 const LoadingStatus = () => {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size={100} color="#750104" />
+      <ActivityIndicator size={100} color={colors.politechnika} />
     </View>
   );
 };

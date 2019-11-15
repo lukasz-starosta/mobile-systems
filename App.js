@@ -4,7 +4,7 @@ import { mapping, light as theme } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import firebase, { auth } from 'firebase';
+import firebase from 'firebase';
 
 import SignUpScreen from './src/screens/sign-up';
 import SignInScreen from './src/screens/sign-in';
@@ -26,38 +26,16 @@ const App = () => {
       appId: '1:220061413588:web:59c966e92a5f82781a4b41',
       measurementId: 'G-97EMD3MPEQ',
     };
+
     firebase.initializeApp(firebaseConfig);
+
     firebase.auth().onAuthStateChanged(authUser => {
-      if (authUser) {
-        setUser(authUser);
-      } else {
-        setUser(null);
-      }
+      setUser(authUser ? authUser : null);
       setloading(false);
     });
   }, []);
 
-  const handleSignUp = (email, password) => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch(error => {
-        console.log(error.message);
-      });
-  };
-
-  const handleSignIn = (email, password) => {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .catch(error => {
-        console.log(error.message);
-      });
-  };
-
   const AppContainer = getAppContainer({
-    handleSignUp: handleSignUp,
-    handleSignIn: handleSignIn,
     user: user,
   });
 
@@ -65,11 +43,7 @@ const App = () => {
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={theme}>
-        {loading ? (
-          <LoadingStatus />
-        ) : (
-          <AppContainer screenProps={handleSignIn} />
-        )}
+        {loading ? <LoadingStatus /> : <AppContainer />}
       </ApplicationProvider>
     </>
   );
@@ -79,18 +53,10 @@ const getAppContainer = passedProps => {
   const Navigator = createStackNavigator(
     {
       SignUp: {
-        screen: props => (
-          <SignUpScreen
-            {...props}
-            handleSignUp={passedProps.handleSignUp}
-            user={passedProps.user}
-          />
-        ),
+        screen: SignUpScreen,
       },
       SignIn: {
-        screen: props => (
-          <SignInScreen {...props} handleSignIn={passedProps.handleSignIn} />
-        ),
+        screen: SignInScreen,
       },
       App: Navigation,
     },
