@@ -5,8 +5,8 @@ import ScreenContainer from '../layout/screen-container';
 
 function DashboardScreen() {
   return (
-    <ScreenContainer>
-      <Text category="h2">Tablica</Text>
+    <ScreenContainer title="Tablica">
+      <Text>wuja tablicka twoja</Text>
     </ScreenContainer>
   );
 }

@@ -4,8 +4,8 @@ import ScreenContainer from '../layout/screen-container';
 
 function ExploreScreen() {
   return (
-    <ScreenContainer>
-      <Text>Explore</Text>
+    <ScreenContainer title="Przeglądaj">
+      <Text>wujeczku pzejrzyj se</Text>
     </ScreenContainer>
   );
 }

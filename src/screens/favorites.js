@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text } from 'react-native-ui-kitten';
 import ScreenContainer from '../layout/screen-container';
+import { Text } from 'react-native-ui-kitten';
 
 function FavoritesScreen() {
   return (
-    <ScreenContainer>
-      <Text>Favorites</Text>
+    <ScreenContainer title="Moje koła">
+      <Text>ulubione wujaszki</Text>
     </ScreenContainer>
   );
 }

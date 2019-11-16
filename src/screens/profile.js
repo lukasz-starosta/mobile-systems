@@ -4,8 +4,8 @@ import ScreenContainer from '../layout/screen-container';
 
 function ProfileScreen() {
   return (
-    <ScreenContainer>
-      <Text>Profile</Text>
+    <ScreenContainer title="Profil">
+      <Text>wuja to mobilny ty</Text>
     </ScreenContainer>
   );
 }
