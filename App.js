@@ -39,11 +39,13 @@ const App = () => {
     user: user,
   });
 
+  if (loading) return <LoadingStatus />;
+
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={theme}>
-        {loading ? <LoadingStatus /> : <AppContainer />}
+        <AppContainer />
       </ApplicationProvider>
     </>
   );

@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { Text, Button } from 'react-native';
+import firebase from 'firebase';
+import ScreenContainer from '../layout/screen-container';
 
 const SignInScreen = ({ navigation }) => {
   const handleSignIn = (email, password) => {
@@ -12,7 +14,7 @@ const SignInScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <ScreenContainer>
       <Text>Welcome back!</Text>
       <Button title="Sign in!" onPress={handleSignIn} />
       <Button
@@ -21,7 +23,7 @@ const SignInScreen = ({ navigation }) => {
           navigation.navigate('SignUp');
         }}
       />
-    </View>
+    </ScreenContainer>
   );
 };
 
