@@ -5,6 +5,7 @@ import ScreenContainer from '../layout/screen-container';
 
 import { SectionTitle } from '../components/texts-containers';
 import Post from '../components/post';
+import Club from '../components/club';
 
 function DashboardScreen() {
   return (
@@ -13,6 +14,8 @@ function DashboardScreen() {
       <Post />
       <Post />
       <SectionTitle>Proponowane koła</SectionTitle>
+      <Club />
+      <Club />
     </ScreenContainer>
   );
 }

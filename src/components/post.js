@@ -5,7 +5,7 @@ import { Layout, Text } from 'react-native-ui-kitten';
 function Post() {
   return (
     <Layout style={styles.container}>
-      <Text style={styles.clubTitle}>Nazwa koła</Text>
+      <Text style={styles.clubName}>Nazwa koła</Text>
       <Text style={styles.postTitle}>Tytuł</Text>
       <Layout>
         <Text style={styles.postContent}>
@@ -22,15 +22,15 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 12,
   },
-  clubTitle: {
+  clubName: {
     fontSize: 18,
     color: '#575757',
-    marginBottom: 4,
   },
   postTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#363636',
+    marginVertical: 4,
   },
   postContent: {
     fontSize: 14,
