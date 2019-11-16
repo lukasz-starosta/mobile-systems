@@ -1,15 +1,14 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Layout, Text } from 'react-native-ui-kitten';
+import { Layout } from 'react-native-ui-kitten';
+import { ScreenTitle } from '../components/texts-containers';
 
 function ScreenContainer(props) {
   const { title, children } = props;
 
   return (
     <Layout style={styles.container} level="2">
-      <Text category="h2" style={styles.title}>
-        {title}
-      </Text>
+      <ScreenTitle>{title}</ScreenTitle>
       <Layout style={styles.contentContainer}>{children}</Layout>
     </Layout>
   );
@@ -18,14 +17,11 @@ function ScreenContainer(props) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingTop: 24,
+    paddingTop: 8,
     backgroundColor: 'white',
   },
   contentContainer: {
-    paddingVertical: 24,
-  },
-  title: {
-    fontWeight: 'bold',
+    paddingVertical: 8,
   },
 });
 
