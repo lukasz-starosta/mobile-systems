@@ -21,7 +21,7 @@ function Club() {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 12,
+    marginVertical: 8,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
