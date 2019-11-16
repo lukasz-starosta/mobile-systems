@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { ApplicationProvider, IconRegistry } from 'react-native-ui-kitten';
+import {
+  ApplicationProvider,
+  IconRegistry,
+  Layout,
+} from 'react-native-ui-kitten';
 import { mapping, light as theme } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { createAppContainer } from 'react-navigation';
@@ -39,11 +43,13 @@ const App = () => {
     user: user,
   });
 
+  if (loading) return <LoadingStatus />;
+
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={theme}>
-        {loading ? <LoadingStatus /> : <AppContainer />}
+        <AppContainer />
       </ApplicationProvider>
     </>
   );
