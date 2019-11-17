@@ -1,20 +1,26 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import colors from '../constants/colors';
+import CustomButton from '../components/button';
 
 const Form = ({ children, title, button, link }) => {
   return (
-    <View style={styles.formContainer}>
-      <Text style={styles.header}>{title}</Text>
-      {children}
-      <View style={styles.buttonContainer}>
-        <CustomButton title={button.title} onPress={button.onPress} />
+    <>
+      <View>
+        <View style={styles.formContainer}>
+          <Text style={styles.header}>{title}</Text>
+          {children}
+        </View>
+        <View style={styles.buttonContainer}>
+          <CustomButton title={button.title} onPress={button.onPress} />
+        </View>
       </View>
       <TouchableWithoutFeedback onPress={link.onPress}>
         <View style={styles.link}>
           <Text>{link.title}</Text>
         </View>
       </TouchableWithoutFeedback>
-    </View>
+    </>
   );
 };
 
@@ -47,6 +53,8 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 6,
+    zIndex: 1
   },
   link: {
     alignItems: 'center',

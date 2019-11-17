@@ -1,78 +1,151 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Image,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import firebase from 'firebase';
 import colors from '../constants/colors';
-import CustomButton from '../components/button';
 import Form from '../components/form';
+import Layout from '../layout/session-layout';
 
 const SignUpScreen = ({ navigation }) => {
+  const [data, setData] = useState({
+    name: '',
+    surname: '',
+    mail: '',
+    password: '',
+    passworConfirm: '',
+    faculty: '',
+    degree: '',
+  });
+  const [errors, setErrors] = useState([]);
+
+  const updateErrors = message => {
+    setErrors(rest => {
+      return [...rest, message];
+    });
+  };
+
   const handleSignUp = () => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword('itsdzefer@gmail.com', 'password')
-      .catch(error => {
-        console.log(error.message);
-      });
+    setErrors([]);
+    if (data.mail.includes('@edu.p.lodz.pl')) {
+      if (data.password === data.passwordConfirm) {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(data.mail, data.password)
+          .catch(error => {
+            updateErrors(error.message);
+          });
+      } else {
+        updateErrors('Passwords do not match.');
+      }
+    } else {
+      updateErrors('Mail is incorrect')
+    }
   };
 
   return (
     <View>
-      <View style={styles.background}>
-        <Image source={require('../images/background.png')} />
-      </View>
-      <View style={styles.logo}>
-        <Image source={require('../images/logo.png')} />
-      </View>
-      <Form
-        title="Rejestracja"
-        button={{ title: 'Zarejestruj', onPress: handleSignUp }}
-        link={{
-          title: 'Logowanie',
-          onPress: () => {
-            navigation.navigate('SignIn');
-          },
-        }}>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.label}>IMIE</Text>
-            <TextInput style={{ ...styles.input, ...{ width: '95%' } }} />
+      <Layout>
+        <Form
+          title="Rejestracja"
+          button={{ title: 'Zarejestruj', onPress: handleSignUp }}
+          link={{
+            title: 'Logowanie',
+            onPress: () => {
+              navigation.navigate('SignIn');
+            },
+          }}>
+          <View style={styles.errors}>
+            {errors.map(error => (
+              <Text
+                key={Math.floor(Math.random() * 100)}
+                style={{ color: 'red' }}>
+                {error}
+              </Text>
+            ))}
           </View>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.label}>NAZWISKO</Text>
-            <TextInput style={styles.input} />
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.label}>IMIE</Text>
+              <TextInput
+                style={{ ...styles.input, ...{ width: '95%' } }}
+                onChangeText={text => {
+                  setData(rest => {
+                    return { ...rest, name: text };
+                  });
+                }}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.label}>NAZWISKO</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  setData(rest => {
+                    return { ...rest, surname: text };
+                  });
+                }}
+              />
+            </View>
           </View>
-        </View>
-        <View>
-          <Text style={styles.label}>MAIL POLITECHNIKI</Text>
-          <TextInput style={styles.input} />
-        </View>
-        <View>
-          <Text style={styles.label}>HASŁO</Text>
-          <TextInput style={styles.input} />
-        </View>
-        <View>
-          <Text style={styles.label}>POTWIERDŹ HASŁO</Text>
-          <TextInput style={styles.input} />
-        </View>
-        <View>
-          <Text style={styles.label}>WYDZIAŁ</Text>
-          <TextInput style={styles.input} />
-        </View>
-        <View>
-          <Text style={styles.label}>KIERUNEK</Text>
-          <TextInput style={styles.input} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <CustomButton title="Zarejestruj" onPress={handleSignUp} />
-        </View>
-      </Form>
+          <View>
+            <Text style={styles.label}>MAIL POLITECHNIKI</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => {
+                setData(rest => {
+                  return { ...rest, mail: text };
+                });
+              }}
+            />
+          </View>
+          <View>
+            <Text style={styles.label}>HASŁO</Text>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={true}
+              onChangeText={text => {
+                console.log(text);
+                setData(rest => {
+                  return { ...rest, password: text };
+                });
+              }}
+            />
+          </View>
+          <View>
+            <Text style={styles.label}>POTWIERDŹ HASŁO</Text>
+            <TextInput
+              style={styles.input}
+              secureTextEntry={true}
+              onChangeText={text => {
+                setData(rest => {
+                  return { ...rest, passwordConfirm: text };
+                });
+              }}
+            />
+          </View>
+          <View>
+            <Text style={styles.label}>WYDZIAŁ</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => {
+                setData(rest => {
+                  return { ...rest, faculty: text };
+                });
+              }}
+            />
+          </View>
+          <View>
+            <Text style={styles.label}>KIERUNEK</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => {
+                setData(rest => {
+                  return { ...rest, degree: text };
+                });
+              }}
+            />
+          </View>
+        </Form>
+      </Layout>
     </View>
   );
 };
@@ -80,25 +153,6 @@ const SignUpScreen = ({ navigation }) => {
 export default SignUpScreen;
 
 const styles = StyleSheet.create({
-  formContainer: {
-    marginHorizontal: 40,
-    paddingHorizontal: 15,
-    paddingTop: 10,
-    paddingBottom: 35,
-    backgroundColor: 'white',
-    borderRadius: 15,
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.26,
-    elevation: 5,
-  },
-  header: {
-    marginBottom: 20,
-    color: colors.politechnika,
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
   label: {
     color: colors.labelGrey,
     fontSize: 12,
@@ -111,27 +165,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingBottom: 2,
   },
-  buttonContainer: {
-    position: 'absolute',
-    bottom: -25,
-    left: 0,
-    right: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  background: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: -1,
-  },
-  logo: {
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  loginLink: {
-    alignItems: 'center',
-    marginTop: 45,
+  errors: {
+    marginTop: -15,
+    marginBottom: 5,
   },
 });
