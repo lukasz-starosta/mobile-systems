@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import firebase from 'firebase';
+import 'firebase/firestore';
 import colors from '../constants/colors';
 import Form from '../components/form';
 import Layout from '../layout/session-layout';
+import fixTimeout from '../timerFix'
 
 const SignUpScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -25,6 +27,10 @@ const SignUpScreen = ({ navigation }) => {
 
   const handleSignUp = () => {
     setErrors([]);
+    fixTimeout();
+
+    const db = firebase.firestore();
+
     if (data.mail.includes('@edu.p.lodz.pl')) {
       if (data.password === data.passwordConfirm) {
         firebase
@@ -33,11 +39,20 @@ const SignUpScreen = ({ navigation }) => {
           .catch(error => {
             updateErrors(error.message);
           });
+
+        db.collection('users')
+          .doc(data.mail)
+          .set({
+            name: data.name,
+            surname: data.surname,
+            faculty: data.faculty,
+            degree: data.degree,
+          });
       } else {
         updateErrors('Passwords do not match.');
       }
     } else {
-      updateErrors('Mail is incorrect')
+      updateErrors('Mail is incorrect');
     }
   };
 
