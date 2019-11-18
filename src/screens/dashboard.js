@@ -19,10 +19,4 @@ function DashboardScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-  },
-});
-
 export default DashboardScreen;
