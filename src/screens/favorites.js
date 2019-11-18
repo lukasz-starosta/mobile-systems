@@ -1,8 +1,15 @@
 import React from 'react';
-import { Text } from 'react-native-ui-kitten';
+import ScreenContainer from '../layout/screen-container';
+import Club from '../components/club';
 
 function FavoritesScreen() {
-  return <Text>Favorites</Text>;
+  return (
+    <ScreenContainer title="Moje koła">
+      <Club />
+      <Club />
+      <Club />
+    </ScreenContainer>
+  );
 }
 
 export default FavoritesScreen;

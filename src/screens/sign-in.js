@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import firebase from 'firebase';
 import Form from '../components/form';
 import colors from '../constants/colors';
 import Layout from '../layout/session-layout';
+import firebase from 'firebase';
 
 const SignInScreen = ({ navigation }) => {
   const [data, setData] = useState({ mail: '', password: '' });
