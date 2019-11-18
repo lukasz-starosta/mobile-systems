@@ -10,12 +10,15 @@ import SignUpScreen from './src/screens/sign-up';
 import SignInScreen from './src/screens/sign-in';
 import Navigation from './src/layout/bottom-navigation';
 import LoadingStatus from './src/components/loading';
+import fixTimeout from './src/timerFix';
 
 const App = () => {
   const [user, setUser] = useState(null);
   const [loading, setloading] = useState(true);
 
   useEffect(() => {
+    fixTimeout();
+
     var firebaseConfig = {
       apiKey: 'AIzaSyA-07RYx1Xzvbvyf0OSEILlli3z1QbSQWY',
       authDomain: 'mobile-systems.firebaseapp.com',
