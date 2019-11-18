@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 6,
-    zIndex: 1
+    zIndex: 1,
   },
   link: {
     alignItems: 'center',

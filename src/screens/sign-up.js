@@ -5,7 +5,6 @@ import 'firebase/firestore';
 import colors from '../constants/colors';
 import Form from '../components/form';
 import Layout from '../layout/session-layout';
-import fixTimeout from '../timerFix'
 
 const SignUpScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -27,7 +26,6 @@ const SignUpScreen = ({ navigation }) => {
 
   const handleSignUp = () => {
     setErrors([]);
-    fixTimeout();
 
     const db = firebase.firestore();
 
