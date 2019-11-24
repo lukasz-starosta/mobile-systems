@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Layout, TouchableWithoutFeedback } from 'react-native';
+import { View } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
 import Button from '../components/button';
 import ProfileInfo from '../components/profile-info';

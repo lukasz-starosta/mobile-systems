@@ -53,8 +53,7 @@ const styles = StyleSheet.create({
     shadowColor: 'grey',
     shadowRadius: 10,
     elevation: 15,
-    marginLeft: 5,
-    marginRight: 5,
+    marginHorizontal: 5,
     marginTop: 15,
 
   },
@@ -83,6 +82,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignItems: 'flex-end',
+    marginRight: 4,
+    marginBottom: 4,
   },
 });
 
