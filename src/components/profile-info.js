@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout, Text, Avatar } from 'react-native-ui-kitten';
+import { TouchableWithoutFeedback } from 'react-native';
 import colors from '../constants/colors';
-
+import { Icon } from 'react-native-ui-kitten';
+import { View } from 'react-native';
 
 function ProfileInfo() {
   return (
@@ -19,7 +21,16 @@ function ProfileInfo() {
         <Text style={styles.name}>Imię Nazwisko</Text>
         <Text style={styles.everythingElse}>example@edu.p.lodz.pl</Text>
         <Text style={styles.everythingElse}>Wydział</Text>
-        <Text style={styles.everythingElse}>Kierunek</Text>
+        <Text style={styles.lastOne}>Kierunek</Text>
+        <View style={styles.icon}>
+          <TouchableWithoutFeedback>
+            <Icon
+              name='edit-outline'
+              width={30}
+              height={30}
+              fill={colors.politechnika} />
+          </TouchableWithoutFeedback>
+        </View>
       </Layout>
     </Layout>
   );
@@ -62,6 +73,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000000',
+  },
+  lastOne: {
+    marginTop: 7,
+    marginLeft: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+  icon: {
+    alignItems: 'flex-end',
+    //marginRight:15,
   },
 });
 

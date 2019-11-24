@@ -20,9 +20,13 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     backgroundColor: 'white',
     position: 'relative',
+    height: '100%'
   },
   contentContainer: {
-    paddingVertical: 8,
+    paddingTop: 8,
+    height: '100%',
+    paddingBottom: 50,
+
   },
 });
 

@@ -1,17 +1,18 @@
 import React from 'react';
-import { View, Text, Layout } from 'react-native-ui-kitten';
+import { View, Text, Layout, TouchableWithoutFeedback } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
 import Button from '../components/button';
 import ProfileInfo from '../components/profile-info';
 import { StyleSheet } from 'react-native';
-
-
+import firebase from 'firebase';
 
 function ProfileScreen() {
   return (
     <ScreenContainer title="Profil">
       <ProfileInfo />
-      <Button title="Wyloguj" styles={styles.bottom}></Button>
+      <View style={styles.bottom}>
+        <Button title="Wyloguj" style={styles.bottom} onPress={() => firebase.auth().signOut()} />
+      </View>
     </ScreenContainer>
   );
 }
@@ -19,8 +20,12 @@ function ProfileScreen() {
 const styles = StyleSheet.create({
   bottom: {
     position: 'absolute',
-    bottom: 0
+    bottom: 85,
+    left: 0,
+    right: 0,
+    alignItems: 'center'
   },
 });
+
 
 export default ProfileScreen;
