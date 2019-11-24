@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignItems: 'flex-end',
-    //marginRight:15,
   },
 });
 
