@@ -19,9 +19,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 8,
     backgroundColor: 'white',
+    height: '100%',
   },
   contentContainer: {
-    paddingVertical: 8,
+    paddingTop: 8,
+    height: '100%',
+    paddingBottom: 50,
+
   },
 });
 
