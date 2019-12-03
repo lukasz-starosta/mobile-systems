@@ -4,7 +4,7 @@ import { Text, Layout, Icon } from 'react-native-ui-kitten';
 import colors from '../constants/colors';
 
 function SearchBar(props) {
-  const { placeholder } = props;
+  const { placeholder, onSubmitEditing } = props;
 
   return (
     <Layout style={styles.searchBar}>
@@ -19,6 +19,7 @@ function SearchBar(props) {
         style={styles.input}
         placeholder={placeholder}
         placeholderTextColor="white"
+        onSubmitEditing={onSubmitEditing}
       />
     </Layout>
   );

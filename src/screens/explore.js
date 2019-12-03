@@ -6,11 +6,14 @@ import Club from '../components/club';
 import { SectionTitle } from '../components/texts-containers';
 import Category from '../components/category';
 
-function ExploreScreen() {
+function ExploreScreen({ navigation }) {
   return (
     <ScreenContainer title="Przeglądaj">
       <View>
-        <SearchBar placeholder="Szukaj..." />
+        <SearchBar
+          placeholder="Szukaj..."
+          onSubmitEditing={() => navigation.navigate('SearchResults')}
+        />
       </View>
       <View style={styles.clubsSection}>
         <SectionTitle>Proponowane</SectionTitle>
