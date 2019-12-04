@@ -72,6 +72,10 @@ const database = {
     user.set(userData);
   },
 
+  async updateUser(userId, userData) {
+    this.document('users', userId).update(userData);
+  },
+
   // clubs
 
   async getAllClubs() {
@@ -125,6 +129,10 @@ const database = {
 
   async addClub(club) {
     this.collection('clubs').add(club);
+  },
+
+  async updateClub(clubId, clubData) {
+    this.document('clubs', clubId).update(clubData);
   },
 
   // members
@@ -187,6 +195,10 @@ const database = {
     return clubs;
   },
 
+  async updateMember(memberId, memberData) {
+    this.document('members', memberId).update(memberData);
+  },
+
   // posts
 
   async getAllPosts() {
@@ -232,6 +244,10 @@ const database = {
 
   async addPost(post) {
     this.collection('posts').add(post);
+  },
+
+  async updatePost(postId, posdtData) {
+    this.collection('posts', postId).update(postData);
   },
 };
 
