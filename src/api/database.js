@@ -246,7 +246,7 @@ const database = {
     this.collection('posts').add(post);
   },
 
-  async updatePost(postId, posdtData) {
+  async updatePost(postId, postData) {
     this.collection('posts', postId).update(postData);
   },
 };
