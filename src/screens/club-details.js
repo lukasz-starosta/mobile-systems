@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   floatingContainer: {
     marginVertical: 10,
-    paddingVertical: 5,
+    paddingVertical: 8,
     paddingHorizontal: 10,
     backgroundColor: 'white',
     borderRadius: 15,
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     marginLeft: 3,
+    marginBottom: 2,
     fontWeight: 'bold',
     color: colors.labelGrey,
   },
