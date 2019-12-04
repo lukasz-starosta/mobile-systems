@@ -20,11 +20,15 @@ function DashboardScreen() {
         title="test"
         onPress={() => {
           const test = async () => {
-            const users = await database.getUsersWhere('faculty', '==', 'IFE');
+            const users = await database.getClubsOfUser(
+              '217846@edu.p.lodz.pl',
+              ['founder'],
+            );
 
-            users.forEach(element => {
-              console.log(element);
-            });
+            console.log(users);
+            // users.forEach(element => {
+            //   console.log(element);
+            // });
 
             // const user = await database.getUser('217846@edu.p.lodz.pl');
 

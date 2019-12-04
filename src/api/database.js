@@ -126,6 +126,62 @@ const database = {
   async addClub(club) {
     this.collection('clubs').add(club);
   },
+
+  // members
+
+  async getMembersOfClub(clubId, status = []) {
+    const memberIds = [];
+
+    const collectionRef =
+      status.length === 0
+        ? this.collection('members').where('club_id', '==', clubId)
+        : this.collection('members')
+            .where('club_id', '==', clubId)
+            .where('status', 'in', status);
+
+    await collectionRef.get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        memberIds.push(doc.data().user_id);
+      });
+    });
+
+    const members = [];
+
+    for (let i = 0; i < memberIds.length; i++) {
+      const user = await this.getUser(memberIds[i]);
+
+      members.push(user);
+    }
+
+    return members;
+  },
+
+  async getClubsOfUser(userId, status = []) {
+    const clubIds = [];
+
+    const collectionRef =
+      status.length === 0
+        ? this.collection('members').where('user_id', '==', userId)
+        : this.collection('members')
+            .where('user_id', '==', userId)
+            .where('status', 'in', status);
+
+    await collectionRef.get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        clubIds.push(doc.data().club_id);
+      });
+    });
+
+    const clubs = [];
+
+    for (let i = 0; i < clubIds.length; i++) {
+      const club = await this.getClub(clubIds[i]);
+
+      clubs.push(club);
+    }
+
+    return clubs;
+  },
 };
 
 export default database;
