@@ -11,6 +11,7 @@ import SignInScreen from './src/screens/sign-in';
 import Navigation from './src/layout/bottom-navigation';
 import LoadingStatus from './src/components/loading';
 import fixTimeout from './src/timerFix';
+import SearchResultsScreen from './src/screens/search-results';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -62,6 +63,9 @@ const getAppContainer = passedProps => {
       },
       SignIn: {
         screen: SignInScreen,
+      },
+      SearchResults: {
+        screen: SearchResultsScreen,
       },
       App: Navigation,
     },
