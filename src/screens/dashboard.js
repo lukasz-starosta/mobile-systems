@@ -16,16 +16,6 @@ function DashboardScreen() {
       <SectionTitle>Proponowane koła</SectionTitle>
       <Club />
       <Club />
-      <CustomButton
-        title="test"
-        onPress={() => {
-          const test = async () => {
-           
-          };
-
-          test();
-        }}
-      />
     </ScreenContainer>
   );
 }
