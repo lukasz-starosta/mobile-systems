@@ -2,12 +2,12 @@ import React from 'react';
 import ScreenContainer from '../layout/screen-container';
 import Club from '../components/club';
 
-function FavoritesScreen() {
+function FavoritesScreen({navigation}) {
   return (
     <ScreenContainer title="Moje koła">
-      <Club />
-      <Club />
-      <Club />
+      <Club navigation={navigation}/>
+      <Club navigation={navigation}/>
+      <Club navigation={navigation}/>
     </ScreenContainer>
   );
 }

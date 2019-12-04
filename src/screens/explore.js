@@ -17,9 +17,9 @@ function ExploreScreen({ navigation }) {
       </View>
       <View style={styles.clubsSection}>
         <SectionTitle>Proponowane</SectionTitle>
-        <Club />
-        <Club />
-        <Club />
+        <Club navigation={navigation} />
+        <Club navigation={navigation} />
+        <Club navigation={navigation} />
       </View>
       <View style={styles.categoriesSection}>
         <SectionTitle>Wydziały</SectionTitle>

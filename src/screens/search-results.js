@@ -14,9 +14,9 @@ function SearchResultsScreen({ navigation }) {
         />
       </View>
       <View style={styles.clubsSection}>
-        <Club />
-        <Club />
-        <Club />
+        <Club navigation={navigation}/>
+        <Club navigation={navigation}/>
+        <Club navigation={navigation}/>
       </View>
     </ScreenContainer>
   );

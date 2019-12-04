@@ -7,15 +7,15 @@ import Club from '../components/club';
 
 import database from '../api/database';
 
-function DashboardScreen() {
+function DashboardScreen({navigation}) {
   return (
     <ScreenContainer title="Tablica">
       <SectionTitle>Najnowsze ogłoszenia</SectionTitle>
       <Post />
       <Post />
       <SectionTitle>Proponowane koła</SectionTitle>
-      <Club />
-      <Club />
+      <Club navigation={navigation}/>
+      <Club navigation={navigation}/>
     </ScreenContainer>
   );
 }

@@ -8,7 +8,7 @@ function ScreenContainer(props) {
 
   return (
     <Layout style={styles.container} level="2">
-      <ScreenTitle>{title}</ScreenTitle>
+      {title && <ScreenTitle>{title}</ScreenTitle>}
       {scrollable ? (
         <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
           <Layout style={styles.contentContainer}>{children}</Layout>
