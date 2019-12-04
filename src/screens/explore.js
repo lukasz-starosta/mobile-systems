@@ -8,7 +8,7 @@ import Category from '../components/category';
 
 function ExploreScreen({ navigation }) {
   return (
-    <ScreenContainer title="Przeglądaj">
+    <ScreenContainer title="Przeglądaj" scrollable>
       <View>
         <SearchBar
           placeholder="Szukaj..."
