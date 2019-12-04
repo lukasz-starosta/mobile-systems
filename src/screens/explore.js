@@ -23,7 +23,10 @@ function ExploreScreen({ navigation }) {
       </View>
       <View style={styles.categoriesSection}>
         <SectionTitle>Wydziały</SectionTitle>
-        <ScrollView horizontal style={styles.categoriesContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.categoriesContainer}>
           <Category categoryName={'Wydział'} />
           <Category categoryName={'Długi Wydział'} />
           <Category categoryName={'Bardzo długi Wydział'} />
@@ -32,7 +35,10 @@ function ExploreScreen({ navigation }) {
       </View>
       <View style={styles.categoriesSection}>
         <SectionTitle>Kategorie</SectionTitle>
-        <ScrollView horizontal style={styles.categoriesContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.categoriesContainer}>
           <Category categoryName={'Informatyka'} />
           <Category categoryName={'Nadrutach dzierganie'} />
           <Category categoryName={'Drogi panie marianie'} />

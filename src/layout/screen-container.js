@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { Layout } from 'react-native-ui-kitten';
 import { ScreenTitle } from '../components/texts-containers';
 
@@ -9,7 +9,9 @@ function ScreenContainer(props) {
   return (
     <Layout style={styles.container} level="2">
       <ScreenTitle>{title}</ScreenTitle>
-      <Layout style={styles.contentContainer}>{children}</Layout>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Layout style={styles.contentContainer}>{children}</Layout>
+      </ScrollView>
     </Layout>
   );
 }
@@ -18,6 +20,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingTop: 8,
+    paddingBottom: 60,
     backgroundColor: 'white',
   },
   contentContainer: {
