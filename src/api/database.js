@@ -129,6 +129,10 @@ const database = {
 
   // members
 
+  async addMember(member) {
+    this.collection('members').add(member);
+  },
+
   async getMembersOfClub(clubId, status = []) {
     const memberIds = [];
 
@@ -181,6 +185,53 @@ const database = {
     }
 
     return clubs;
+  },
+
+  // posts
+
+  async getAllPosts() {
+    const posts = [];
+
+    await this.getAllFromCollection('posts').then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const post = { ...doc.data(), uid: doc.id };
+
+        posts.push(post);
+      });
+    });
+
+    return posts;
+  },
+
+  async getPost(postId) {
+    const document = await this.document('posts', postId).get();
+
+    const post = document.exists
+      ? { ...document.data(), uid: document.id }
+      : null;
+
+    return post;
+  },
+
+  async getPostsWhere(field, comparison, value) {
+    const posts = [];
+
+    await this.collection('posts')
+      .where(field, comparison, value)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const post = { ...doc.data(), uid: doc.id };
+
+          posts.push(post);
+        });
+      });
+
+    return posts;
+  },
+
+  async addPost(post) {
+    this.collection('posts').add(post);
   },
 };
 

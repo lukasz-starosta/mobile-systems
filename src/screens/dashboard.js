@@ -20,27 +20,7 @@ function DashboardScreen() {
         title="test"
         onPress={() => {
           const test = async () => {
-            const users = await database.getClubsOfUser(
-              '217846@edu.p.lodz.pl',
-              ['founder'],
-            );
-
-            console.log(users);
-            // users.forEach(element => {
-            //   console.log(element);
-            // });
-
-            // const user = await database.getUser('217846@edu.p.lodz.pl');
-
-            // console.log(user);
-
-            // await database.setUser({
-            //   email: '256414@edu.p.lodz.pl',
-            //   degree: 'test',
-            //   faculty: 'test',
-            //   name: 'testaczek',
-            //   surname: 'wujaczek',
-            // });
+           
           };
 
           test();
