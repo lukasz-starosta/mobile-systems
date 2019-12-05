@@ -12,6 +12,7 @@ import Navigation from './src/layout/bottom-navigation';
 import LoadingStatus from './src/components/loading';
 import fixTimeout from './src/timerFix';
 import SearchResultsScreen from './src/screens/search-results';
+import AddingPostsScreen from './src/screens/adding-post';
 import database from './src/api/database';
 import ClubDetailsScreen from './src/screens/club-details';
 
@@ -72,6 +73,9 @@ const getAppContainer = passedProps => {
       },
       ClubDetails: {
         screen: ClubDetailsScreen,
+      },
+      AddingPost: {
+        screen: AddingPostsScreen
       },
       App: Navigation,
     },

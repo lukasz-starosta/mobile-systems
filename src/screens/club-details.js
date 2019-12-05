@@ -7,7 +7,7 @@ import CustomButton from '../components/button';
 import colors from '../constants/colors';
 import Post from '../components/post';
 
-const ClubDetailsScreen = () => {
+const ClubDetailsScreen = ({ navigation }) => {
   return (
     <>
       <ScreenContainer scrollable styleProps={styles.screenContainer}>
@@ -78,7 +78,7 @@ const ClubDetailsScreen = () => {
         <Post />
       </ScreenContainer>
       <View style={styles.floatingButton}>
-        <CustomButton title="Dodaj ogłoszenie" />
+        <CustomButton title="Dodaj ogłoszenie" onPress={() => navigation.navigate('AddingPost')}/>
       </View>
     </>
   );
