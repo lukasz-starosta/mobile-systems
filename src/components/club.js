@@ -1,21 +1,26 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Layout, Text, Avatar } from 'react-native-ui-kitten';
 
-function Club() {
+function Club({ navigation }) {
   return (
-    <Layout style={styles.container}>
-      <Avatar
-        style={styles.image}
-        source={{
-          uri: 'https://i.imgur.com/2y3Sm4x.jpg',
-        }}
-      />
-      <Layout>
-        <Text style={styles.clubName}>Długa nazwa koła</Text>
-        <Text style={styles.facultyName}>Jeszcze dłuższa nazwa wydziału</Text>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        navigation.navigate('ClubDetails');
+      }}>
+      <Layout style={styles.container}>
+        <Avatar
+          style={styles.image}
+          source={{
+            uri: 'https://i.imgur.com/2y3Sm4x.jpg',
+          }}
+        />
+        <Layout>
+          <Text style={styles.clubName}>Długa nazwa koła</Text>
+          <Text style={styles.facultyName}>Jeszcze dłuższa nazwa wydziału</Text>
+        </Layout>
       </Layout>
-    </Layout>
+    </TouchableWithoutFeedback>
   );
 }
 

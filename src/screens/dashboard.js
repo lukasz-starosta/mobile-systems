@@ -5,17 +5,15 @@ import { SectionTitle } from '../components/texts-containers';
 import Post from '../components/post';
 import Club from '../components/club';
 
-import database from '../api/database';
-
-function DashboardScreen() {
+function DashboardScreen({navigation}) {
   return (
     <ScreenContainer title="Tablica">
       <SectionTitle>Najnowsze ogłoszenia</SectionTitle>
-      <Post />
-      <Post />
+      <Post clubName/>
+      <Post clubName/>
       <SectionTitle>Proponowane koła</SectionTitle>
-      <Club />
-      <Club />
+      <Club navigation={navigation}/>
+      <Club navigation={navigation}/>
     </ScreenContainer>
   );
 }

@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, TouchableNativeFeedback, StyleSheet } from 'react-native';
 import colors from '../constants/colors';
 
-const CustomButton = ({ title, onPress }) => {
+const CustomButton = ({ title, onPress, styleProps }) => {
   return (
     <TouchableNativeFeedback onPress={onPress}>
-      <View style={styles.button}>
+      <View style={{...styles.button, ...styleProps}}>
         <Text style={styles.title}>{title}</Text>
       </View>
     </TouchableNativeFeedback>

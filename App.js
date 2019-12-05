@@ -13,6 +13,7 @@ import LoadingStatus from './src/components/loading';
 import fixTimeout from './src/timerFix';
 import SearchResultsScreen from './src/screens/search-results';
 import database from './src/api/database';
+import ClubDetailsScreen from './src/screens/club-details';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -68,6 +69,9 @@ const getAppContainer = passedProps => {
       },
       SearchResults: {
         screen: SearchResultsScreen,
+      },
+      ClubDetails: {
+        screen: ClubDetailsScreen,
       },
       App: Navigation,
     },

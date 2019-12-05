@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout, Text } from 'react-native-ui-kitten';
 
-function Post() {
+function Post({ clubName }) {
   return (
     <Layout style={styles.container}>
-      <Text style={styles.clubName}>Nazwa koła</Text>
+      {clubName && <Text style={styles.clubName}>Nazwa koła</Text>}
       <Text style={styles.postTitle}>Tytuł</Text>
       <Layout>
         <Text style={styles.postContent}>
