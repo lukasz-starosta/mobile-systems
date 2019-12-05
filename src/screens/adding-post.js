@@ -1,25 +1,25 @@
 import React from 'react';
-import { View } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
 import NewPost from '../components/new-post';
 import Button from '../components/button';
 
 function AddingPostsScreen() {
   return (
-    <ScreenContainer title="Nowe ogłoszenie">
-       <NewPost />
-      <View style={styles.bottom}>
-      <Button title="Opublikuj"/>
-      </View>
-    </ScreenContainer>
+    <KeyboardAvoidingView behavior="padding" enabled>
+      <ScreenContainer title="Nowe ogłoszenie">
+        <NewPost />
+        <View style={styles.bottom}>
+          <Button title="Opublikuj" />
+        </View>
+      </ScreenContainer>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   bottom: {
-    position: 'absolute',
-    bottom: 20,
+    bottom: 25,
     left: 0,
     right: 0,
     alignItems: 'center',

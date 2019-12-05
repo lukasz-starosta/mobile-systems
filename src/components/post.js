@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Layout, Text } from 'react-native-ui-kitten';
+import { TouchableWithoutFeedback } from 'react-native';
 
-function Post({ clubName }) {
+function Post({ clubName, navigation }) {
   return (
     <Layout style={styles.container}>
       {clubName && <Text style={styles.clubName}>Nazwa koła</Text>}
@@ -11,7 +12,9 @@ function Post({ clubName }) {
         <Text style={styles.postContent}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
           in posuere nunc. Proin laoreet placerat quam...{' '}
-          <Text style={styles.seeMore}>Zobacz więcej...</Text>
+          <TouchableWithoutFeedback>
+            <Text style={styles.seeMore} onPress={() => navigation.navigate('WholePost')}>Zobacz więcej...</Text>
+          </TouchableWithoutFeedback>
         </Text>
       </Layout>
     </Layout>

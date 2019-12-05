@@ -9,8 +9,8 @@ function DashboardScreen({navigation}) {
   return (
     <ScreenContainer title="Tablica">
       <SectionTitle>Najnowsze ogłoszenia</SectionTitle>
-      <Post clubName/>
-      <Post clubName/>
+      <Post clubName navigation={navigation}/>
+      <Post clubName navigation={navigation}/>
       <SectionTitle>Proponowane koła</SectionTitle>
       <Club navigation={navigation}/>
       <Club navigation={navigation}/>

@@ -15,6 +15,7 @@ import SearchResultsScreen from './src/screens/search-results';
 import AddingPostsScreen from './src/screens/adding-post';
 import database from './src/api/database';
 import ClubDetailsScreen from './src/screens/club-details';
+import WholePostScreen from './src/screens/whole-post';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -76,6 +77,9 @@ const getAppContainer = passedProps => {
       },
       AddingPost: {
         screen: AddingPostsScreen
+      },
+      WholePost: {
+        screen: WholePostScreen
       },
       App: Navigation,
     },

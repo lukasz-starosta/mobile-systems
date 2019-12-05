@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   textContainer: {
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderRadius: 15,
     borderColor: 'white',
     shadowColor: 'grey',
