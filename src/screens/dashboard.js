@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
-
+import CustomButton from '../components/button';
 import { SectionTitle } from '../components/texts-containers';
 import Post from '../components/post';
 import Club from '../components/club';
+
+import database from '../api/database';
 
 function DashboardScreen() {
   return (

@@ -12,6 +12,7 @@ import Navigation from './src/layout/bottom-navigation';
 import LoadingStatus from './src/components/loading';
 import fixTimeout from './src/timerFix';
 import SearchResultsScreen from './src/screens/search-results';
+import database from './src/api/database';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -32,6 +33,7 @@ const App = () => {
     };
 
     firebase.initializeApp(firebaseConfig);
+    database.initialize(firebase.firestore());
 
     firebase.auth().onAuthStateChanged(authUser => {
       setUser(authUser ? authUser : null);
