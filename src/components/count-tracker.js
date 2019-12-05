@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 18,
+    lineHeight: 18,
     color: colors.labelGrey,
   },
   count: {

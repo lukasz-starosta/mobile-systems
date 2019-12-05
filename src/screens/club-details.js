@@ -9,80 +9,87 @@ import Post from '../components/post';
 
 const ClubDetailsScreen = () => {
   return (
-    <ScreenContainer>
-      <View style={styles.header}>
-        <Avatar
-          style={styles.image}
-          source={{
-            uri: 'https://i.imgur.com/2y3Sm4x.jpg',
-          }}
-        />
-        <View style={{ marginLeft: 5 }}>
-          <View style={styles.counters}>
-            <CountTracker title="członków" count="321" />
-            <CountTracker title="ogłoszeń" count="167" />
+    <>
+      <ScreenContainer scrollable styleProps={styles.screenContainer}>
+        <View style={styles.header}>
+          <Avatar
+            style={styles.image}
+            source={{
+              uri: 'https://i.imgur.com/2y3Sm4x.jpg',
+            }}
+          />
+          <View style={{ marginLeft: 5 }}>
+            <View style={styles.counters}>
+              <CountTracker title="członków" count="321" />
+              <CountTracker title="ogłoszeń" count="167" />
+            </View>
+            <CustomButton title="Aplikuj" styleProps={styles.button} />
           </View>
-          <CustomButton title="Aplikuj" styleProps={styles.button} />
         </View>
-      </View>
-      <View style={{ marginTop: 3 }}>
-        <Text category="h5" style={styles.clubName}>
-          Długa nazwa koła
+        <View style={{ marginTop: 3 }}>
+          <Text category="h5" style={styles.clubName}>
+            Długa nazwa koła
+          </Text>
+          <Text category="h6" style={styles.facultyName}>
+            Jeszcze dłuższa nazwa wydziału
+          </Text>
+          <Text style={{ marginTop: 5 }}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book.
+          </Text>
+        </View>
+        <View style={styles.floatingContainer}>
+          <View style={styles.infoContainer}>
+            <Icon
+              name="person-outline"
+              width={16}
+              height={16}
+              fill={colors.politechnika}
+            />
+            <Text style={styles.infoText}>Krzysztof Komarski (Mosquitio)</Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Icon
+              name="email-outline"
+              width={16}
+              height={16}
+              fill={colors.politechnika}
+            />
+            <Text style={styles.infoText}>example@edu.p.lodz.pl</Text>
+          </View>
+          <View style={styles.infoContainer}>
+            <Icon
+              name="globe-outline"
+              width={16}
+              height={16}
+              fill={colors.politechnika}
+            />
+            <Text style={styles.infoText}>ww.komaryfujary.p.lodz.pl</Text>
+          </View>
+        </View>
+        <Text category="h3" style={styles.postsHeader}>
+          Najnowsze ogłoszenia
         </Text>
-        <Text category="h6" style={styles.facultyName}>
-          Jeszcze dłuższa nazwa wydziału.
-        </Text>
-        <Text style={{ marginTop: 5 }}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book.
-        </Text>
-      </View>
-      <View style={styles.floatingContainer}>
-        <View style={styles.infoContainer}>
-          <Icon
-            name="person-outline"
-            width={16}
-            height={16}
-            fill={colors.politechnika}
-          />
-          <Text style={styles.infoText}>Krzysztof Komarski (Mosquitio)</Text>
-        </View>
-        <View style={styles.infoContainer}>
-          <Icon
-            name="email-outline"
-            width={16}
-            height={16}
-            fill={colors.politechnika}
-          />
-          <Text style={styles.infoText}>example@edu.p.lodz.pl</Text>
-        </View>
-        <View style={styles.infoContainer}>
-          <Icon
-            name="globe-outline"
-            width={16}
-            height={16}
-            fill={colors.politechnika}
-          />
-          <Text style={styles.infoText}>ww.komaryfujary.p.lodz.pl</Text>
-        </View>
-      </View>
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+      </ScreenContainer>
       <View style={styles.floatingButton}>
         <CustomButton title="Dodaj ogłoszenie" />
       </View>
-      <Text category="h3" style={styles.postsHeader}>
-        Najnowsze ogłoszenia
-      </Text>
-      <Post />
-      <Post />
-    </ScreenContainer>
+    </>
   );
 };
 
 export default ClubDetailsScreen;
 
 const styles = StyleSheet.create({
+  screenContainer: {
+    paddingBottom: 10,
+  },
   header: {
     flexDirection: 'row',
   },
@@ -105,6 +112,7 @@ const styles = StyleSheet.create({
   },
   facultyName: {
     fontSize: 16,
+    lineHeight: 16,
     fontWeight: 'bold',
     color: colors.labelGrey,
   },
@@ -112,7 +120,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
