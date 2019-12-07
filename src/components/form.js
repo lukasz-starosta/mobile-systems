@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import colors from '../constants/colors';
 import CustomButton from '../components/button';
 
-const Form = ({ children, title, button, link }) => {
+const Form = ({ children, title, button, link, styleProps }) => {
   return (
     <>
       <View>
-        <View style={styles.formContainer}>
+        <View style={{...styles.formContainer, ...styleProps}}>
           <Text style={styles.header}>{title}</Text>
           {children}
         </View>
@@ -15,11 +15,13 @@ const Form = ({ children, title, button, link }) => {
           <CustomButton title={button.title} onPress={button.onPress} />
         </View>
       </View>
-      <TouchableWithoutFeedback onPress={link.onPress}>
-        <View style={styles.link}>
-          <Text>{link.title}</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      {link && (
+        <TouchableWithoutFeedback onPress={link.onPress}>
+          <View style={styles.link}>
+            <Text>{link.title}</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      )}
     </>
   );
 };
