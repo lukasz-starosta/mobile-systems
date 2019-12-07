@@ -102,6 +102,27 @@ const database = {
     return club;
   },
 
+  async getClubsByName(name) {
+    const clubs = [];
+
+    if (!name) return clubs;
+
+    // we use _name, as it is the lowercase equivalent and firestore is case sensitive
+    await this.collection('clubs')
+      .orderBy('_name')
+      .startAt(name.toLowerCase())
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const club = { ...doc.data(), uid: doc.id };
+
+          clubs.push(club);
+        });
+      });
+
+    return clubs;
+  },
+
   async getClubsWhere(field, comparison, value) {
     const clubs = [];
 

@@ -2,7 +2,10 @@ import React from 'react';
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Layout, Text, Avatar } from 'react-native-ui-kitten';
 
-function Club({ navigation }) {
+function Club({ navigation, club }) {
+  let name = (club && club.name) || 'Długa nazwa koła';
+  let faculty = (club && club.faculty) || 'Jeszcze dłuższa nazwa wydziału';
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -16,8 +19,8 @@ function Club({ navigation }) {
           }}
         />
         <Layout>
-          <Text style={styles.clubName}>Długa nazwa koła</Text>
-          <Text style={styles.facultyName}>Jeszcze dłuższa nazwa wydziału</Text>
+          <Text style={styles.clubName}>{name}</Text>
+          <Text style={styles.facultyName}>{faculty}</Text>
         </Layout>
       </Layout>
     </TouchableWithoutFeedback>
