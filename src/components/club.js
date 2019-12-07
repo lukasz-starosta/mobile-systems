@@ -3,13 +3,13 @@ import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Layout, Text, Avatar } from 'react-native-ui-kitten';
 
 function Club({ navigation, club }) {
-  let name = (club && club.name) || 'Długa nazwa koła';
-  let faculty = (club && club.faculty) || 'Jeszcze dłuższa nazwa wydziału';
+  const name = (club && club.name) || 'Długa nazwa koła';
+  const faculty = (club && club.faculty) || 'Jeszcze dłuższa nazwa wydziału';
 
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate('ClubDetails');
+        navigation.navigate('ClubDetails', club);
       }}>
       <Layout style={styles.container}>
         <Avatar

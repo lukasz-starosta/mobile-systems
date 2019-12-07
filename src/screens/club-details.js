@@ -7,7 +7,11 @@ import CustomButton from '../components/button';
 import colors from '../constants/colors';
 import Post from '../components/post';
 
-const ClubDetailsScreen = () => {
+const ClubDetailsScreen = ({ navigation }) => {
+  const club = navigation.state.params;
+  const name = (club && club.name) || 'Długa nazwa koła';
+  const faculty = (club && club.faculty) || 'Jeszcze dłuższa nazwa wydziału';
+
   return (
     <>
       <ScreenContainer scrollable styleProps={styles.screenContainer}>
@@ -28,10 +32,10 @@ const ClubDetailsScreen = () => {
         </View>
         <View style={{ marginTop: 3 }}>
           <Text category="h5" style={styles.clubName}>
-            Długa nazwa koła
+            {name}
           </Text>
           <Text category="h6" style={styles.facultyName}>
-            Jeszcze dłuższa nazwa wydziału
+            {faculty}
           </Text>
           <Text style={{ marginTop: 5 }}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
