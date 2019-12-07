@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
-import { Text, Layout, Icon } from 'react-native-ui-kitten';
+import { Layout, Icon } from 'react-native-ui-kitten';
 import colors from '../constants/colors';
 
 function SearchBar(props) {
-  const { placeholder, onSubmitEditing } = props;
+  const { placeholder, navigation, initialValue } = props;
+
+  const [value, setValue] = useState(initialValue || '');
 
   return (
     <Layout style={styles.searchBar}>
@@ -16,10 +18,23 @@ function SearchBar(props) {
         fill="white"
       />
       <TextInput
+        value={value}
+        onChangeText={text => {
+          setValue(text);
+        }}
         style={styles.input}
         placeholder={placeholder}
         placeholderTextColor="white"
-        onSubmitEditing={onSubmitEditing}
+        onSubmitEditing={() => {
+          // Don't push other scren on stack to enable backing to explore with 1 click
+          if (navigation.state.routeName === 'SearchResults') {
+            navigation.replace('SearchResults', { value });
+          } else {
+            navigation.push('SearchResults', {
+              value,
+            });
+          }
+        }}
       />
     </Layout>
   );

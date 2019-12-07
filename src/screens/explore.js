@@ -10,10 +10,7 @@ function ExploreScreen({ navigation }) {
   return (
     <ScreenContainer title="Przeglądaj" scrollable>
       <View>
-        <SearchBar
-          placeholder="Szukaj..."
-          onSubmitEditing={() => navigation.navigate('SearchResults')}
-        />
+        <SearchBar placeholder="Szukaj..." navigation={navigation} />
       </View>
       <View style={styles.clubsSection}>
         <SectionTitle>Proponowane</SectionTitle>
