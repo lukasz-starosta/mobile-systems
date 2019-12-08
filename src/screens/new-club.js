@@ -13,7 +13,7 @@ import colors from '../constants/colors';
 import ImagePicker from 'react-native-image-picker';
 import storage from '../api/storage';
 import database from '../api/database';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 import LoadingStatus from '../components/loading';
 
 const CreateClubScreen = ({ navigation }) => {
@@ -97,13 +97,11 @@ const CreateClubScreen = ({ navigation }) => {
   const handleClubCreation = () => {
     const createClub = async () => {
       setLoading(true);
+
       const url = await uploadImage(image.uri);
 
-      setClub(rest => {
-        return { ...rest, icon: url };
-      });
+      await database.addClub({ ...club, icon: url });
 
-      await database.addClub(club);
       navigation.navigate('Favorites');
       setLoading(false);
     };

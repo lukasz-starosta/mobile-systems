@@ -15,7 +15,6 @@
     "firebase": "^7.4.0",
     "react": "16.8.6",
     "react-native": "0.60.5",
-    "react-native-fetch-blob": "^0.10.8",
     "react-native-gesture-handler": "^1.5.0",
     "react-native-image-picker": "^1.1.0",
     "react-native-navigation": "^3.5.1",
@@ -25,7 +24,8 @@
     "react-native-ui-kitten": "^4.2.0",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3",
-    "react-navigation-tabs": "^2.5.6"
+    "react-navigation-tabs": "^2.5.6",
+    "rn-fetch-blob": "^0.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
