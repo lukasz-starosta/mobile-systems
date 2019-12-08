@@ -141,15 +141,19 @@ const database = {
   },
 
   async setClub(clubData) {
-    const club = this.document('club', clubData.uid);
+    const club = this.document('clubs', clubData.uid);
 
     delete clubData.uid;
 
-    user.set(club);
+    club.set(clubData);
   },
 
   async addClub(club) {
-    this.collection('clubs').add(club);
+    return await this.collection('clubs')
+      .add(club)
+      .then(doc => {
+        return doc.id;
+      });
   },
 
   async updateClub(clubId, clubData) {
