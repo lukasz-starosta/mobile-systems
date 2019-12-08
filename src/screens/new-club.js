@@ -16,7 +16,7 @@ import database from '../api/database';
 import RNFetchBlob from 'rn-fetch-blob';
 import LoadingStatus from '../components/loading';
 
-const CreateClubScreen = ({ navigation }) => {
+const CreateClubScreen = ({ navigation, user }) => {
   const [club, setClub] = useState({
     name: '',
     contact_email: '',
@@ -100,7 +100,13 @@ const CreateClubScreen = ({ navigation }) => {
 
       const url = await uploadImage(image.uri);
 
-      await database.addClub({ ...club, icon: url });
+      const clubId = await database.addClub({ ...club, icon: url });
+
+      await database.addMember({
+        club_id: clubId,
+        user_id: user.email,
+        status: 'founder',
+      });
 
       navigation.navigate('Favorites');
       setLoading(false);

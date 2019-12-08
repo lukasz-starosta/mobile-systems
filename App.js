@@ -74,7 +74,7 @@ const getAppContainer = passedProps => {
         screen: SearchResultsScreen,
       },
       CreateClub: {
-        screen: CreateClubScreen,
+        screen: props => <CreateClubScreen {...props} {...passedProps} />,
       },
       ClubDetails: {
         screen: ClubDetailsScreen,

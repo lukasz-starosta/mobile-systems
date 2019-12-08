@@ -149,7 +149,11 @@ const database = {
   },
 
   async addClub(club) {
-    this.collection('clubs').add(club);
+    return await this.collection('clubs')
+      .add(club)
+      .then(doc => {
+        return doc.id;
+      });
   },
 
   async updateClub(clubId, clubData) {
