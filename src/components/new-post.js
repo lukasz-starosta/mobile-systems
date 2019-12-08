@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 15,
     paddingHorizontal: 10,
-    height: 535
+    height: '92%'
   },
   titleStyle: {
     marginTop: 5,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     color: colors.labelGrey,
   },
   contentStyle: {
-    height: 390,
+    height: '72%',
     textAlignVertical: 'top'
   },
   imageIconStyle: {

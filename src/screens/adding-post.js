@@ -1,19 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
 import NewPost from '../components/new-post';
 import Button from '../components/button';
 
 function AddingPostsScreen() {
   return (
-    <KeyboardAvoidingView behavior="padding" enabled>
-      <ScreenContainer title="Nowe ogłoszenie">
-        <NewPost />
-        <View style={styles.bottom}>
-          <Button title="Opublikuj" />
-        </View>
-      </ScreenContainer>
-    </KeyboardAvoidingView>
+    <ScreenContainer title="Nowe ogłoszenie">
+      <NewPost />
+      <View style={styles.bottom}>
+        <Button title="Opublikuj" />
+      </View>
+    </ScreenContainer>
   );
 }
 
