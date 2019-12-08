@@ -14,6 +14,8 @@ import fixTimeout from './src/timerFix';
 import SearchResultsScreen from './src/screens/search-results';
 import database from './src/api/database';
 import ClubDetailsScreen from './src/screens/club-details';
+import ClubJoinRequestsScreen from './src/screens/club-join-requests';
+import ClubMembersScreen from './src/screens/club-members';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -72,6 +74,12 @@ const getAppContainer = passedProps => {
       },
       ClubDetails: {
         screen: ClubDetailsScreen,
+      },
+      ClubMembers: {
+        screen: ClubMembersScreen,
+      },
+      ClubJoinRequests: {
+        screen: ClubJoinRequestsScreen,
       },
       App: Navigation,
     },
