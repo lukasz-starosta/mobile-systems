@@ -14,8 +14,10 @@ import fixTimeout from './src/timerFix';
 import SearchResultsScreen from './src/screens/search-results';
 import AddingPostsScreen from './src/screens/adding-post';
 import database from './src/api/database';
+import storage from './src/api/storage';
 import ClubDetailsScreen from './src/screens/club-details';
 import WholePostScreen from './src/screens/whole-post';
+import CreateClubScreen from './src/screens/new-club';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -37,6 +39,7 @@ const App = () => {
 
     firebase.initializeApp(firebaseConfig);
     database.initialize(firebase.firestore());
+    storage.initialize(firebase.storage());
 
     firebase.auth().onAuthStateChanged(authUser => {
       setUser(authUser ? authUser : null);
@@ -71,6 +74,9 @@ const getAppContainer = passedProps => {
       },
       SearchResults: {
         screen: SearchResultsScreen,
+      },
+      CreateClub: {
+        screen: props => <CreateClubScreen {...props} {...passedProps} />,
       },
       ClubDetails: {
         screen: ClubDetailsScreen,

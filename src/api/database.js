@@ -102,6 +102,27 @@ const database = {
     return club;
   },
 
+  async getClubsByName(name) {
+    const clubs = [];
+
+    if (!name) return clubs;
+
+    // we use _name, as it is the lowercase equivalent and firestore is case sensitive
+    await this.collection('clubs')
+      .orderBy('_name')
+      .startAt(name.toLowerCase())
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const club = { ...doc.data(), uid: doc.id };
+
+          clubs.push(club);
+        });
+      });
+
+    return clubs;
+  },
+
   async getClubsWhere(field, comparison, value) {
     const clubs = [];
 
@@ -120,15 +141,19 @@ const database = {
   },
 
   async setClub(clubData) {
-    const club = this.document('club', clubData.uid);
+    const club = this.document('clubs', clubData.uid);
 
     delete clubData.uid;
 
-    user.set(club);
+    club.set(clubData);
   },
 
   async addClub(club) {
-    this.collection('clubs').add(club);
+    return await this.collection('clubs')
+      .add(club)
+      .then(doc => {
+        return doc.id;
+      });
   },
 
   async updateClub(clubId, clubData) {
