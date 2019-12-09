@@ -148,7 +148,9 @@ const database = {
     club.set(clubData);
   },
 
-  async addClub(club) {
+  async addClub(clubData) {
+    const club = { ...clubData, _name: clubData.name.toLowerCase() };
+
     return await this.collection('clubs')
       .add(club)
       .then(doc => {
