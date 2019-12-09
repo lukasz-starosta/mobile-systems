@@ -12,9 +12,11 @@ import Navigation from './src/layout/bottom-navigation';
 import LoadingStatus from './src/components/loading';
 import fixTimeout from './src/timerFix';
 import SearchResultsScreen from './src/screens/search-results';
+import AddingPostsScreen from './src/screens/adding-post';
 import database from './src/api/database';
 import storage from './src/api/storage';
 import ClubDetailsScreen from './src/screens/club-details';
+import WholePostScreen from './src/screens/whole-post';
 import ClubJoinRequestsScreen from './src/screens/club-join-requests';
 import ClubMembersScreen from './src/screens/club-members';
 import CreateClubScreen from './src/screens/new-club';
@@ -80,6 +82,12 @@ const getAppContainer = passedProps => {
       },
       ClubDetails: {
         screen: ClubDetailsScreen,
+      },
+      AddingPost: {
+        screen: AddingPostsScreen,
+      },
+      WholePost: {
+        screen: WholePostScreen,
       },
       ClubMembers: {
         screen: ClubMembersScreen,

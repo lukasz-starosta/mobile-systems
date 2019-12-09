@@ -11,7 +11,6 @@ const ClubDetailsScreen = ({ navigation }) => {
   const club = navigation.state.params;
   const name = (club && club.name) || 'Długa nazwa koła';
   const faculty = (club && club.faculty) || 'Jeszcze dłuższa nazwa wydziału';
-
   return (
     <>
       <ScreenContainer scrollable styleProps={styles.screenContainer}>
@@ -82,13 +81,13 @@ const ClubDetailsScreen = ({ navigation }) => {
         <Text category="h3" style={styles.postsHeader}>
           Najnowsze ogłoszenia
         </Text>
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        <Post navigation={navigation}/>
+        <Post navigation={navigation}/>
+        <Post navigation={navigation}/>
+        <Post navigation={navigation}/>
       </ScreenContainer>
       <View style={styles.floatingButton}>
-        <CustomButton title="Dodaj ogłoszenie" />
+        <CustomButton title="Dodaj ogłoszenie" onPress={() => navigation.navigate('AddingPost')}/>
       </View>
     </>
   );
@@ -136,6 +135,7 @@ const styles = StyleSheet.create({
   },
   floatingContainer: {
     marginVertical: 10,
+    marginHorizontal: 3,
     paddingVertical: 8,
     paddingHorizontal: 10,
     backgroundColor: 'white',

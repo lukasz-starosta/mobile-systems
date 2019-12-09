@@ -4,17 +4,19 @@ import { Layout } from 'react-native-ui-kitten';
 import { ScreenTitle } from '../components/texts-containers';
 
 function ScreenContainer(props) {
-  const { title, children, scrollable, styleProps } = props;
+  const { title, children, scrollable, styleProps, noStyle } = props;
+  const containerStyle = !noStyle && { ...styles.container, ...styleProps };
+  const contentContainerStyle = !noStyle && styles.contentContainer;
 
   return (
-    <Layout style={{ ...styles.container, ...styleProps }} level="2">
+    <Layout style={containerStyle} level="2">
       {title && <ScreenTitle>{title}</ScreenTitle>}
       {scrollable ? (
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Layout style={styles.contentContainer}>{children}</Layout>
+          <Layout style={contentContainerStyle}>{children}</Layout>
         </ScrollView>
       ) : (
-        <Layout style={styles.contentContainer}>{children}</Layout>
+        <Layout style={contentContainerStyle}>{children}</Layout>
       )}
     </Layout>
   );
