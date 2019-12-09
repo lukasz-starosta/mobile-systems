@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native';
 import firebase from 'firebase';
 import 'firebase/firestore';
 import colors from '../constants/colors';
@@ -47,7 +53,7 @@ const SignUpScreen = ({ navigation }) => {
           })
           .catch(error => {
             updateErrors(error.message);
-          })
+          });
       } else {
         updateErrors('Passwords do not match.');
       }
@@ -57,7 +63,7 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView behavior="position" enabled>
       <Layout>
         <Form
           title="Rejestracja"
@@ -160,7 +166,7 @@ const SignUpScreen = ({ navigation }) => {
           </View>
         </Form>
       </Layout>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
