@@ -65,11 +65,11 @@ const database = {
   },
 
   async setUser(userData) {
-    const user = this.document('users', userData.email);
+    const user = await this.document('users', userData.uid);
 
-    delete userData.email;
+    delete userData.uid;
 
-    user.set(userData);
+    await user.set(userData);
   },
 
   async updateUser(userId, userData) {

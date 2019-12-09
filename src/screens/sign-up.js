@@ -5,6 +5,7 @@ import 'firebase/firestore';
 import colors from '../constants/colors';
 import Form from '../components/form';
 import Layout from '../layout/session-layout';
+import database from '../api/database';
 
 const SignUpScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -27,25 +28,27 @@ const SignUpScreen = ({ navigation }) => {
   const handleSignUp = () => {
     setErrors([]);
 
-    const db = firebase.firestore();
-
     if (data.mail.includes('@edu.p.lodz.pl')) {
       if (data.password === data.passwordConfirm) {
         firebase
           .auth()
           .createUserWithEmailAndPassword(data.mail, data.password)
+          .then(async result => {
+            const { user } = result;
+            console.log(user);
+
+            await database.setUser({
+              name: data.name,
+              surname: data.surname,
+              email: data.mail,
+              faculty: data.faculty,
+              degree: data.degree,
+              uid: user.uid,
+            });
+          })
           .catch(error => {
             updateErrors(error.message);
-          });
-
-        db.collection('users')
-          .doc(data.mail)
-          .set({
-            name: data.name,
-            surname: data.surname,
-            faculty: data.faculty,
-            degree: data.degree,
-          });
+          })
       } else {
         updateErrors('Passwords do not match.');
       }
@@ -116,7 +119,6 @@ const SignUpScreen = ({ navigation }) => {
               style={styles.input}
               secureTextEntry={true}
               onChangeText={text => {
-                console.log(text);
                 setData(rest => {
                   return { ...rest, password: text };
                 });
