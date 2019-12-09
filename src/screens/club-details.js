@@ -26,9 +26,7 @@ const ClubDetailsScreen = ({ navigation }) => {
               <CountTracker
                 title="członków"
                 count="321"
-                handlePress={() =>
-                  navigation.navigate('ClubMembers', { clubName: name })
-                }
+                handlePress={() => navigation.navigate('ClubMembers', { club })}
               />
               <CountTracker title="ogłoszeń" count="167" />
             </View>

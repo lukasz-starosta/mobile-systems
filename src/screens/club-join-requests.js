@@ -4,11 +4,11 @@ import ScreenContainer from '../layout/screen-container';
 import { SectionTitle } from '../components/texts-containers';
 
 function ClubJoinRequestsScreen({ navigation }) {
-  const { clubName } = navigation.state.params;
+  const { club } = navigation.state.params;
 
   return (
     <ScreenContainer title="Prośby o dołączenie">
-      <SectionTitle>{clubName}</SectionTitle>
+      <SectionTitle>{club.name}</SectionTitle>
       <UserAvatar navigation={navigation} showIcons />
       <UserAvatar navigation={navigation} showIcons />
       <UserAvatar navigation={navigation} showIcons />

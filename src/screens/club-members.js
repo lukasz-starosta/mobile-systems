@@ -1,24 +1,49 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import UserAvatar from '../components/user-avatar';
 import ScreenContainer from '../layout/screen-container';
 import { SectionTitle } from '../components/texts-containers';
 import CustomButton from '../components/button';
+import database from '../api/database';
+import { ClubStatus, ReadableClubStatus } from '../constants/types';
+import LoadingStatus from '../components/loading';
 
 function ClubMembersScreen({ navigation }) {
-  const { clubName } = navigation.state.params;
+  const { club } = navigation.state.params;
 
+  const [members, setMembers] = useState(null);
+  useEffect(() => {
+    async function fetchMembers() {
+      setMembers(
+        await database.getMembersOfClub(club.uid, [
+          ClubStatus.ADMIN,
+          ClubStatus.FOUNDER,
+          ClubStatus.MEMBER,
+        ]),
+      );
+    }
+
+    fetchMembers();
+  }, []);
+
+  if (!members) return <LoadingStatus />;
+  console.log(members[0]);
   return (
     <>
       <ScreenContainer title="Członkowie">
-        <SectionTitle>{clubName}</SectionTitle>
-        <UserAvatar navigation={navigation} subtitle="Administrator" />
-        <UserAvatar navigation={navigation} subtitle="członek" />
-        <UserAvatar navigation={navigation} subtitle="członek" />
+        <SectionTitle>{club.name}</SectionTitle>
+        {members.map(member => (
+          <UserAvatar
+            navigation={navigation}
+            user={member}
+            subtitle={ReadableClubStatus[member.status]}
+            key={member.uid}
+          />
+        ))}
       </ScreenContainer>
       <View style={styles.floatingButton}>
         <CustomButton
-          onPress={() => navigation.navigate('ClubJoinRequests', { clubName })}
+          onPress={() => navigation.navigate('ClubJoinRequests', { club })}
           title="Prośby o dołączenie"
         />
       </View>

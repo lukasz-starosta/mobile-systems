@@ -167,7 +167,7 @@ const database = {
   },
 
   async getMembersOfClub(clubId, status = []) {
-    const memberIds = [];
+    const members = [];
 
     const collectionRef =
       status.length === 0
@@ -178,19 +178,23 @@ const database = {
 
     await collectionRef.get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        memberIds.push(doc.data().user_id);
+        members.push(doc.data());
       });
     });
 
-    const members = [];
+    const users = [];
 
-    for (let i = 0; i < memberIds.length; i++) {
-      const user = await this.getUser(memberIds[i]);
+    for (let i = 0; i < members.length; i++) {
+      const user = await this.getUser(members[i].user_id);
 
-      members.push(user);
+      users.push({
+        ...user,
+        uid: members[i].user_id,
+        status: members[i].status,
+      });
     }
 
-    return members;
+    return users;
   },
 
   async getClubsOfUser(userId, status = []) {
