@@ -7,9 +7,11 @@ import Button from '../components/button';
 function AddingPostsScreen() {
   return (
     <ScreenContainer title="Nowe ogłoszenie">
-      <NewPost />
-      <View style={styles.bottom}>
-        <Button title="Opublikuj" />
+      <View style={{ paddingBottom: 35 }}>
+        <NewPost />
+        <View style={styles.bottom}>
+          <Button title="Opublikuj" />
+        </View>
       </View>
     </ScreenContainer>
   );
@@ -21,7 +23,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: 'center',
-    elevation: 16
+    elevation: 16,
   },
 });
 

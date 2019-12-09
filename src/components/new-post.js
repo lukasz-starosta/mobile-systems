@@ -1,22 +1,41 @@
 import React from 'react';
-import { StyleSheet, View, TouchableWithoutFeedback, TextInput } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  TextInput,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { Layout, Text, Icon } from 'react-native-ui-kitten';
 import colors from '../constants/colors';
-
 
 function NewPost() {
   return (
     <Layout style={styles.textStyle}>
-      <TextInput style={styles.titleStyle}>Tytuł ogłoszenia</TextInput>
-      <Text style={styles.dateStyle}>Styczeń 23, 2019 10:00</Text>
-      <TextInput multiline={true} scrollEnabled={true} style={styles.contentStyle}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </TextInput>
+      <View>
+        <TextInput style={styles.titleStyle}>Tytuł ogłoszenia</TextInput>
+
+        <Text style={styles.dateStyle}>Styczeń 23, 2019 10:00</Text>
+        <KeyboardAvoidingView behaviour="padding" enabled>
+          <TextInput
+            multiline={true}
+            scrollEnabled={true}
+            style={styles.contentStyle}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.{' '}
+          </TextInput>
+        </KeyboardAvoidingView>
+      </View>
       <TouchableWithoutFeedback>
         <View style={styles.imageIconStyle}>
           <Icon
-            name='image-outline'
+            name="image-outline"
             width={30}
             height={30}
-            fill={colors.politechnika} />
+            fill={colors.politechnika}
+          />
           <Text>Dodaj zdjęcia</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -26,14 +45,14 @@ function NewPost() {
 
 const styles = StyleSheet.create({
   textStyle: {
-    borderWidth: 1,
+    justifyContent: 'space-between',
     borderRadius: 15,
-    borderColor: 'white',
+    backgroundColor: 'white',
     shadowColor: 'grey',
     shadowRadius: 10,
     elevation: 15,
     paddingHorizontal: 10,
-    height: '92%'
+    height: '92%',
   },
   titleStyle: {
     marginTop: 5,
@@ -47,16 +66,15 @@ const styles = StyleSheet.create({
     color: colors.labelGrey,
   },
   contentStyle: {
-    height: '72%',
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
+    maxHeight: 220
   },
   imageIconStyle: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
     alignItems: 'center',
-    bottom: 40,
-    position: 'absolute',
-    paddingLeft: 15
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingLeft: 10,
+    marginBottom: 30,
   },
 });
 

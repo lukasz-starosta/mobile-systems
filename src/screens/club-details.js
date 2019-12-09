@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
   },
   floatingContainer: {
     marginVertical: 10,
+    marginHorizontal: 3,
     paddingVertical: 8,
     paddingHorizontal: 10,
     backgroundColor: 'white',
