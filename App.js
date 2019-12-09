@@ -17,6 +17,8 @@ import database from './src/api/database';
 import storage from './src/api/storage';
 import ClubDetailsScreen from './src/screens/club-details';
 import WholePostScreen from './src/screens/whole-post';
+import ClubJoinRequestsScreen from './src/screens/club-join-requests';
+import ClubMembersScreen from './src/screens/club-members';
 import CreateClubScreen from './src/screens/new-club';
 
 const App = () => {
@@ -82,10 +84,16 @@ const getAppContainer = passedProps => {
         screen: ClubDetailsScreen,
       },
       AddingPost: {
-        screen: AddingPostsScreen
+        screen: AddingPostsScreen,
       },
       WholePost: {
-        screen: WholePostScreen
+        screen: WholePostScreen,
+      },
+      ClubMembers: {
+        screen: ClubMembersScreen,
+      },
+      ClubJoinRequests: {
+        screen: ClubJoinRequestsScreen,
       },
       App: Navigation,
     },

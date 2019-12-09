@@ -23,7 +23,13 @@ const ClubDetailsScreen = ({ navigation }) => {
           />
           <View style={{ marginLeft: 5 }}>
             <View style={styles.counters}>
-              <CountTracker title="członków" count="321" />
+              <CountTracker
+                title="członków"
+                count="321"
+                handlePress={() =>
+                  navigation.navigate('ClubMembers', { clubName: name })
+                }
+              />
               <CountTracker title="ogłoszeń" count="167" />
             </View>
             <CustomButton title="Aplikuj" styleProps={styles.button} />
