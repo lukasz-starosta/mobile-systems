@@ -178,10 +178,11 @@ const database = {
 
     await collectionRef.get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        members.push(doc.data());
+        members.push({ ...doc.data(), memberId: doc.id });
       });
     });
 
+    if (members.length === 0) return [];
     const users = [];
 
     for (let i = 0; i < members.length; i++) {
@@ -189,6 +190,7 @@ const database = {
 
       users.push({
         ...user,
+        memberId: members[i].memberId,
         uid: members[i].user_id,
         status: members[i].status,
       });

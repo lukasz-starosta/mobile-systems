@@ -9,25 +9,8 @@ import { ClubStatus, ReadableClubStatus } from '../constants/types';
 import LoadingStatus from '../components/loading';
 
 function ClubMembersScreen({ navigation }) {
-  const { club } = navigation.state.params;
+  const { club, members, fetchMembers } = navigation.state.params;
 
-  const [members, setMembers] = useState(null);
-  useEffect(() => {
-    async function fetchMembers() {
-      setMembers(
-        await database.getMembersOfClub(club.uid, [
-          ClubStatus.ADMIN,
-          ClubStatus.FOUNDER,
-          ClubStatus.MEMBER,
-        ]),
-      );
-    }
-
-    fetchMembers();
-  }, []);
-
-  if (!members) return <LoadingStatus />;
-  console.log(members[0]);
   return (
     <>
       <ScreenContainer title="Członkowie">
@@ -43,7 +26,12 @@ function ClubMembersScreen({ navigation }) {
       </ScreenContainer>
       <View style={styles.floatingButton}>
         <CustomButton
-          onPress={() => navigation.navigate('ClubJoinRequests', { club })}
+          onPress={() =>
+            navigation.navigate('ClubJoinRequests', {
+              club,
+              fetchMembers,
+            })
+          }
           title="Prośby o dołączenie"
         />
       </View>

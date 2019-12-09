@@ -2,10 +2,12 @@ import React from 'react';
 import { View, Text, TouchableNativeFeedback, StyleSheet } from 'react-native';
 import colors from '../constants/colors';
 
-const CustomButton = ({ title, onPress, styleProps }) => {
+const CustomButton = ({ title, disabled, onPress, styleProps }) => {
+  const disabledStyles = disabled ? styles.disabled : [];
+  const handlePress = disabled ? () => {} : onPress;
   return (
-    <TouchableNativeFeedback onPress={onPress}>
-      <View style={{...styles.button, ...styleProps}}>
+    <TouchableNativeFeedback onPress={handlePress}>
+      <View style={{ ...styles.button, ...styleProps, ...disabledStyles }}>
         <Text style={styles.title}>{title}</Text>
       </View>
     </TouchableNativeFeedback>
@@ -26,6 +28,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.31,
     elevation: 2,
     justifyContent: 'center',
+  },
+  disabled: {
+    backgroundColor: colors.inputGrey,
   },
   title: {
     color: 'white',
