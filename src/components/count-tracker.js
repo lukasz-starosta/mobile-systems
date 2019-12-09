@@ -1,13 +1,15 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import colors from '../constants/colors';
 
-const CountTracker = ({ title, count }) => {
+const CountTracker = ({ title, count, handlePress }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.count}>{count}</Text>
-      <Text style={styles.title}>{title}</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={handlePress}>
+      <View style={styles.container}>
+        <Text style={styles.count}>{count}</Text>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
