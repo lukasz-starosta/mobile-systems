@@ -35,7 +35,6 @@ const SignUpScreen = ({ navigation }) => {
           .createUserWithEmailAndPassword(data.mail, data.password)
           .then(async result => {
             const { user } = result;
-            console.log(user);
 
             await database.setUser({
               name: data.name,
