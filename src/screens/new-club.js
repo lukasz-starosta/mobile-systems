@@ -104,7 +104,7 @@ const CreateClubScreen = ({ navigation, user }) => {
 
       await database.addMember({
         club_id: clubId,
-        user_id: user.email,
+        user_id: user.uid,
         status: 'founder',
       });
 

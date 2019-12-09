@@ -28,7 +28,7 @@ const database = {
 
     await this.getAllFromCollection('users').then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        const user = { ...doc.data(), email: doc.id };
+        const user = { ...doc.data(), uid: doc.id };
 
         users.push(user);
       });
@@ -41,7 +41,7 @@ const database = {
     const document = await this.document('users', userId).get();
 
     const user = document.exists
-      ? { ...document.data(), email: document.id }
+      ? { ...document.data(), uid: document.id }
       : null;
 
     return user;
@@ -55,7 +55,7 @@ const database = {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          const user = { ...doc.data(), email: doc.id };
+          const user = { ...doc.data(), uid: doc.id };
 
           users.push(user);
         });
