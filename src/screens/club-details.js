@@ -81,13 +81,18 @@ const ClubDetailsScreen = ({ navigation }) => {
         <Text category="h3" style={styles.postsHeader}>
           Najnowsze ogłoszenia
         </Text>
-        <Post navigation={navigation}/>
-        <Post navigation={navigation}/>
-        <Post navigation={navigation}/>
-        <Post navigation={navigation}/>
+        <View style={{ marginBottom: 55 }}>
+          <Post navigation={navigation} />
+          <Post navigation={navigation} />
+          <Post navigation={navigation} />
+          <Post navigation={navigation} />
+        </View>
       </ScreenContainer>
       <View style={styles.floatingButton}>
-        <CustomButton title="Dodaj ogłoszenie" onPress={() => navigation.navigate('AddingPost')}/>
+        <CustomButton
+          title="Dodaj ogłoszenie"
+          onPress={() => navigation.navigate('AddingPost')}
+        />
       </View>
     </>
   );

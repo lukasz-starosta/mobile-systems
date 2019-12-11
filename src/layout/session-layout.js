@@ -3,7 +3,7 @@ import { View, StyleSheet, Image } from 'react-native';
 
 const SessionLayout = ({ children }) => {
   return (
-    <View>
+    <View style={{ paddingBottom: 10 }}>
       <View style={styles.background}>
         <Image
           source={require('../images/background.png')}
