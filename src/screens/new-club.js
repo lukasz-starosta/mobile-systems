@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   View,
+  ScrollView,
   Text,
   StyleSheet,
   TextInput,
@@ -117,83 +118,85 @@ const CreateClubScreen = ({ navigation, user }) => {
   if (loading) return <LoadingStatus />;
 
   return (
-    <ScreenContainer scrollable>
-      <View style={{ marginBottom: 40 }}>
-        <Form
-          title="Stwórz klub"
-          button={{ title: 'Stwórz', onPress: handleClubCreation }}
-          styleProps={styles.form}>
-          <View>
-            <Text style={styles.label}>NAZWA</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => {
-                setClub(rest => {
-                  return { ...rest, name: text };
-                });
-              }}
-            />
-          </View>
-          <View>
-            <Text style={styles.label}>MAIL KONTAKTOWY</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => {
-                setClub(rest => {
-                  return { ...rest, contact_email: text };
-                });
-              }}
-            />
-          </View>
-          <View>
-            <Text style={styles.label}>OPIS</Text>
-            <TextInput
-              multiline
-              scrollEnabled
-              style={{
-                ...styles.input,
-                height: 60,
-                textAlignVertical: 'bottom',
-              }}
-              onChangeText={text => {
-                setClub(rest => {
-                  return { ...rest, description: text };
-                });
-              }}
-            />
-          </View>
-          <View>
-            <Text style={styles.label}>WYDZIAŁ</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => {
-                setClub(rest => {
-                  return { ...rest, faculty: text };
-                });
-              }}
-            />
-          </View>
-          <View>
-            <Text style={styles.label}>STRONA INTERNETOWA</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => {
-                setClub(rest => {
-                  return { ...rest, web_page: text };
-                });
-              }}
-            />
-          </View>
-          <View>
-            <Text style={styles.label}>IKONA KOŁA</Text>
+    <ScreenContainer>
+      <ScrollView>
+        <View style={{ marginTop: 5, marginBottom: 40 }}>
+          <Form
+            title="Stwórz klub"
+            button={{ title: 'Stwórz', onPress: handleClubCreation }}
+            styleProps={styles.form}>
             <View>
-              <TouchableWithoutFeedback onPress={openImagePicker}>
-                <Image source={{ uri: image.src }} style={styles.icon} />
-              </TouchableWithoutFeedback>
+              <Text style={styles.label}>NAZWA</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  setClub(rest => {
+                    return { ...rest, name: text };
+                  });
+                }}
+              />
             </View>
-          </View>
-        </Form>
-      </View>
+            <View>
+              <Text style={styles.label}>MAIL KONTAKTOWY</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  setClub(rest => {
+                    return { ...rest, contact_email: text };
+                  });
+                }}
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>OPIS</Text>
+              <TextInput
+                multiline
+                scrollEnabled
+                style={{
+                  ...styles.input,
+                  height: 60,
+                  textAlignVertical: 'bottom',
+                }}
+                onChangeText={text => {
+                  setClub(rest => {
+                    return { ...rest, description: text };
+                  });
+                }}
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>WYDZIAŁ</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  setClub(rest => {
+                    return { ...rest, faculty: text };
+                  });
+                }}
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>STRONA INTERNETOWA</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  setClub(rest => {
+                    return { ...rest, web_page: text };
+                  });
+                }}
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>IKONA KOŁA</Text>
+              <View>
+                <TouchableWithoutFeedback onPress={openImagePicker}>
+                  <Image source={{ uri: image.src }} style={styles.icon} />
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+          </Form>
+        </View>
+      </ScrollView>
     </ScreenContainer>
   );
 };

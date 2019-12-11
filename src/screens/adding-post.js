@@ -1,30 +1,33 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
 import NewPost from '../components/new-post';
-import Button from '../components/button';
+import LoadingStatus from '../components/loading';
 
-function AddingPostsScreen() {
+function AddingPostsScreen({ navigation }) {
+  const club = navigation.state.params;
+  const [loading, setLoading] = useState(false);
+
+  if (loading) return <LoadingStatus />;
+
+  const setLoadingTrue = () => {
+    setLoading(true);
+  };
+  const setLoadingFalse = () => {
+    setLoading(false);
+  };
+
   return (
     <ScreenContainer title="Nowe ogłoszenie">
       <View style={{ paddingBottom: 35 }}>
-        <NewPost />
-        <View style={styles.bottom}>
-          <Button title="Opublikuj" />
-        </View>
+        <NewPost
+          navigation={navigation}
+          club={club}
+          loading={{ setFalse: setLoadingFalse, setTrue: setLoadingTrue }}
+        />
       </View>
     </ScreenContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  bottom: {
-    bottom: 25,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    elevation: 16,
-  },
-});
 
 export default AddingPostsScreen;

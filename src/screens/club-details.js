@@ -91,7 +91,7 @@ const ClubDetailsScreen = ({ navigation }) => {
       <View style={styles.floatingButton}>
         <CustomButton
           title="Dodaj ogłoszenie"
-          onPress={() => navigation.navigate('AddingPost')}
+          onPress={() => navigation.navigate('AddingPost', club)}
         />
       </View>
     </>
