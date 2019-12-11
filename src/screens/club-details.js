@@ -17,14 +17,14 @@ async function fetchMemberStatus(club, user, setApplyButtonDisabled) {
     ClubStatus.FOUNDER,
     ClubStatus.MEMBER,
   ]);
-  const findById = member => member.uid === user.email;
+  const findById = member => member.uid === user.uid;
   const isMemberAlready = typeof members.find(findById) !== 'undefined';
 
   if (isMemberAlready) setApplyButtonDisabled(true);
   else setApplyButtonDisabled(false);
 }
 
-async function fetchMembers(club, setMembers) {
+const fetchMembersFun = (club, setMembers) => async () => {
   setMembers(
     await database.getMembersOfClub(club.uid, [
       ClubStatus.ADMIN,
@@ -32,7 +32,7 @@ async function fetchMembers(club, setMembers) {
       ClubStatus.MEMBER,
     ]),
   );
-}
+};
 
 const ClubDetailsScreen = ({ navigation, user }) => {
   const club = navigation.state.params;
@@ -43,16 +43,18 @@ const ClubDetailsScreen = ({ navigation, user }) => {
   const [applyInProgress, setApplyInProgress] = useState(false);
   const [members, setMembers] = useState(null);
 
+  const fetchMembers = fetchMembersFun(club, setMembers);
+
   useEffect(() => {
     fetchMemberStatus(club, user, setApplyButtonDisabled);
-    fetchMembers(club, setMembers);
+    fetchMembers();
   }, []);
 
   const handleApply = async () => {
     setApplyInProgress(true);
     await database.addMember({
       club_id: club.uid,
-      user_id: user.email,
+      user_id: user.uid,
       status: 'pending',
     });
     await fetchMemberStatus(club, user, setApplyButtonDisabled);
@@ -80,7 +82,7 @@ const ClubDetailsScreen = ({ navigation, user }) => {
                   navigation.navigate('ClubMembers', {
                     club,
                     members,
-                    fetchMembers: () => fetchMembers(club, setMembers),
+                    fetchMembers,
                   })
                 }
               />

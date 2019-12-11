@@ -111,6 +111,7 @@ const database = {
     await this.collection('clubs')
       .orderBy('_name')
       .startAt(name.toLowerCase())
+      .endAt(name.toLowerCase() + '\uf8ff')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -227,7 +228,11 @@ const database = {
   },
 
   async updateMember(memberId, memberData) {
-    this.document('members', memberId).update(memberData);
+    return await this.document('members', memberId).update(memberData);
+  },
+
+  async deleteMember(memberId) {
+    return await this.document('members', memberId).delete();
   },
 
   // posts

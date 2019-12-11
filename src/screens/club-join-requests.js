@@ -32,12 +32,22 @@ function ClubJoinRequestsScreen({ navigation }) {
     setStatusChangeInProgress(false);
   };
 
+  const deleteMember = async user => {
+    setStatusChangeInProgress(true);
+
+    await database.deleteMember(user.memberId);
+    await fetchJoinRequests(club, setJoinRequests);
+    await fetchMembers();
+
+    setStatusChangeInProgress(false);
+  };
+
   const onAccept = user => {
     updateMemberStatus(user, ClubStatus.MEMBER);
   };
 
-  const onDecline = async user => {
-    updateMemberStatus(user, ClubStatus.DECLINED);
+  const onDecline = user => {
+    deleteMember(user);
   };
 
   if (!joinRequests || statusChangeInProgress) return <LoadingStatus />;

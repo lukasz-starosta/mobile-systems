@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import UserAvatar from '../components/user-avatar';
 import ScreenContainer from '../layout/screen-container';
 import { SectionTitle } from '../components/texts-containers';
 import CustomButton from '../components/button';
-import database from '../api/database';
-import { ClubStatus, ReadableClubStatus } from '../constants/types';
-import LoadingStatus from '../components/loading';
+import { ReadableClubStatus } from '../constants/types';
 
 function ClubMembersScreen({ navigation }) {
   const { club, members, fetchMembers } = navigation.state.params;
