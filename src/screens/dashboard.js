@@ -7,7 +7,7 @@ import Club from '../components/club';
 
 function DashboardScreen({navigation}) {
   return (
-    <ScreenContainer title="Tablica">
+    <ScreenContainer title="Tablica" scrollable>
       <SectionTitle>Najnowsze ogłoszenia</SectionTitle>
       <Post clubName navigation={navigation}/>
       <Post clubName navigation={navigation}/>

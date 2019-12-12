@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+} from 'react-native';
 import firebase from 'firebase';
 import Form from '../components/form';
 import colors from '../constants/colors';
@@ -21,7 +27,7 @@ const SignInScreen = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView behavior="position" enabled>
       <Layout>
         <Form
           title="Logowanie"
@@ -60,7 +66,7 @@ const SignInScreen = ({ navigation }) => {
           </View>
         </Form>
       </Layout>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

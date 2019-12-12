@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
 import Button from '../components/button';
 import ProfileInfo from '../components/profile-info';
@@ -7,10 +7,12 @@ import { StyleSheet } from 'react-native';
 import firebase from 'firebase';
 
 function ProfileScreen() {
+  const statusBarHeight = StatusBar.currentHeight;
+
   return (
     <ScreenContainer title="Profil">
       <ProfileInfo />
-      <View style={styles.bottom}>
+      <View style={{ ...styles.bottom, bottom: statusBarHeight + 10 }}>
         <Button title="Wyloguj" onPress={() => firebase.auth().signOut()} />
       </View>
     </ScreenContainer>
@@ -20,7 +22,6 @@ function ProfileScreen() {
 const styles = StyleSheet.create({
   bottom: {
     position: 'absolute',
-    bottom: 20,
     left: 0,
     right: 0,
     alignItems: 'center',

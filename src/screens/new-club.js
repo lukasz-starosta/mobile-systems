@@ -104,7 +104,7 @@ const CreateClubScreen = ({ navigation, user }) => {
 
       await database.addMember({
         club_id: clubId,
-        user_id: user.email,
+        user_id: user.uid,
         status: 'founder',
       });
 
@@ -117,8 +117,8 @@ const CreateClubScreen = ({ navigation, user }) => {
   if (loading) return <LoadingStatus />;
 
   return (
-    <ScreenContainer>
-      <View style={{ height: '100%', justifyContent: 'center' }}>
+    <ScreenContainer scrollable>
+      <View style={{ marginBottom: 40 }}>
         <Form
           title="Stwórz klub"
           button={{ title: 'Stwórz', onPress: handleClubCreation }}
@@ -150,7 +150,11 @@ const CreateClubScreen = ({ navigation, user }) => {
             <TextInput
               multiline
               scrollEnabled
-              style={{ ...styles.input, height: 60 }}
+              style={{
+                ...styles.input,
+                height: 60,
+                textAlignVertical: 'bottom',
+              }}
               onChangeText={text => {
                 setClub(rest => {
                   return { ...rest, description: text };

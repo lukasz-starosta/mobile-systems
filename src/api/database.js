@@ -28,7 +28,7 @@ const database = {
 
     await this.getAllFromCollection('users').then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        const user = { ...doc.data(), email: doc.id };
+        const user = { ...doc.data(), uid: doc.id };
 
         users.push(user);
       });
@@ -41,7 +41,7 @@ const database = {
     const document = await this.document('users', userId).get();
 
     const user = document.exists
-      ? { ...document.data(), email: document.id }
+      ? { ...document.data(), uid: document.id }
       : null;
 
     return user;
@@ -55,7 +55,7 @@ const database = {
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
-          const user = { ...doc.data(), email: doc.id };
+          const user = { ...doc.data(), uid: doc.id };
 
           users.push(user);
         });
@@ -65,11 +65,11 @@ const database = {
   },
 
   async setUser(userData) {
-    const user = this.document('users', userData.email);
+    const user = await this.document('users', userData.uid);
 
-    delete userData.email;
+    delete userData.uid;
 
-    user.set(userData);
+    await user.set(userData);
   },
 
   async updateUser(userId, userData) {
@@ -149,7 +149,9 @@ const database = {
     club.set(clubData);
   },
 
-  async addClub(club) {
+  async addClub(clubData) {
+    const club = { ...clubData, _name: clubData.name.toLowerCase() };
+
     return await this.collection('clubs')
       .add(club)
       .then(doc => {
