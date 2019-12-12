@@ -1,12 +1,19 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { Layout, Text, Avatar } from 'react-native-ui-kitten';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
 import colors from '../constants/colors';
 import { Icon } from 'react-native-ui-kitten';
-import { View } from 'react-native';
+import database from '../api/database';
 
-function ProfileInfo() {
+function ProfileInfo({ navigation, user }) {
+  useEffect(() => {
+  });
+  const currentUser = database.getUser(user.uid);
+  const name = (currentUser && currentUser.name) || 'Brak imienia';
+  const surname = (currentUser && currentUser.surname) || 'Brak nazwiska';
+  const faculty = (currentUser && currentUser.faculty) || 'Brak wydziału';
+  const degree = (currentUser && currentUser.degree) || 'Brak kierunku';
+  const email = (currentUser && currentUser.email) || 'Brak emaila'
   return (
     <Layout>
       <Layout style={styles.imageContainer}>
@@ -18,17 +25,18 @@ function ProfileInfo() {
         />
       </Layout>
       <Layout style={styles.textContainer}>
-        <Text style={styles.name}>Imię Nazwisko</Text>
-        <Text style={styles.everythingElse}>example@edu.p.lodz.pl</Text>
-        <Text style={styles.everythingElse}>Wydział</Text>
-        <Text style={styles.lastOne}>Kierunek</Text>
+        <Text style={styles.name}>{name} {surname}</Text>
+        <Text style={styles.everythingElse}>{email}</Text>
+        <Text style={styles.everythingElse}>{faculty}</Text>
+        <Text style={styles.lastOne}>{degree}</Text>
         <View style={styles.icon}>
-          <TouchableWithoutFeedback>
-            <Icon
-              name='edit-outline'
-              width={30}
-              height={30}
-              fill={colors.politechnika} />
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('EditProfile')}>
+              <Icon
+                name='edit-outline'
+                width={30}
+                height={30}
+                fill={colors.politechnika}
+              />
           </TouchableWithoutFeedback>
         </View>
       </Layout>

@@ -6,12 +6,12 @@ import ProfileInfo from '../components/profile-info';
 import { StyleSheet } from 'react-native';
 import firebase from 'firebase';
 
-function ProfileScreen() {
+function ProfileScreen({ navigation, user }) {
   const statusBarHeight = StatusBar.currentHeight;
 
   return (
     <ScreenContainer title="Profil">
-      <ProfileInfo />
+      <ProfileInfo navigation={navigation} user={user}/>
       <View style={{ ...styles.bottom, bottom: statusBarHeight + 10 }}>
         <Button title="Wyloguj" onPress={() => firebase.auth().signOut()} />
       </View>

@@ -20,6 +20,7 @@ import WholePostScreen from './src/screens/whole-post';
 import ClubJoinRequestsScreen from './src/screens/club-join-requests';
 import ClubMembersScreen from './src/screens/club-members';
 import CreateClubScreen from './src/screens/new-club';
+import EditProfileScreen from './src/screens/edit-profile';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -95,7 +96,12 @@ const getAppContainer = passedProps => {
       ClubJoinRequests: {
         screen: ClubJoinRequestsScreen,
       },
-      App: Navigation,
+      EditProfile: {
+        screen: EditProfileScreen,
+      },
+      App: {
+        screen: props => <Navigation {...props} {...passedProps} />,
+      },
     },
     {
       initialRouteName: passedProps.user ? 'App' : 'SignIn',

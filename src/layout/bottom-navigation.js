@@ -28,33 +28,43 @@ const routes = {
   },
 };
 
-const TabNavigator = createBottomTabNavigator(
-  {
-    Dashboard: { screen: DashboardScreen },
-    Explore: { screen: ExploreScreen },
-    Favorites: { screen: FavoritesScreen },
-    Profile: { screen: ProfileScreen },
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      const { routeName } = navigation.state;
-      return {
-        tabBarIcon: ({ tintColor }) => (
-          <Icon
-            name={routes[routeName].iconName}
-            width={25}
-            height={25}
-            fill={tintColor}
-          />
-        ),
-        title: routes[routeName].title,
-        tabBarOptions: {
-          activeTintColor: colors.politechnika,
-          inactiveTintColor: colors.basic,
-        },
-      };
-    },
-  },
-);
+function Navigation( props ) {
+  const AppContainer = getAppContainer( props );
+  return (
+    <AppContainer />
+  );
+};
 
-export default createAppContainer(TabNavigator);
+const getAppContainer = passedProps => {
+  const TabNavigator = createBottomTabNavigator(
+    {
+      Dashboard: { screen: DashboardScreen },
+      Explore: { screen: ExploreScreen },
+      Favorites: { screen: FavoritesScreen },
+      Profile: { screen: props => <ProfileScreen {...props} {...passedProps} /> },
+    },
+    {
+      defaultNavigationOptions: ({ navigation }) => {
+        const { routeName } = navigation.state;
+        return {
+          tabBarIcon: ({ tintColor }) => (
+            <Icon
+              name={routes[routeName].iconName}
+              width={25}
+              height={25}
+              fill={tintColor}
+            />
+          ),
+          title: routes[routeName].title,
+          tabBarOptions: {
+            activeTintColor: colors.politechnika,
+            inactiveTintColor: colors.basic,
+          },
+        };
+      },
+    },
+  );
+  return createAppContainer(TabNavigator);
+}
+
+export default Navigation;

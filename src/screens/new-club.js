@@ -118,7 +118,7 @@ const CreateClubScreen = ({ navigation, user }) => {
   if (loading) return <LoadingStatus />;
 
   return (
-    <ScreenContainer>
+    <ScreenContainer noStyle>
       <ScrollView>
         <View style={{ marginTop: 5, marginBottom: 40 }}>
           <Form
