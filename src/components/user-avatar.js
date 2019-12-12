@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 import { Layout, Text, Avatar } from 'react-native-ui-kitten';
 
-function UserAvatar({ navigation, user, subtitle, showIcons }) {
+function UserAvatar({ navigation, user, subtitle, onAccept, onDecline }) {
   const name = (user && user.name) || 'Imię nazwisko';
   const faculty = (user && user.faculty) || 'Nazwa wydziału';
 
@@ -22,16 +22,20 @@ function UserAvatar({ navigation, user, subtitle, showIcons }) {
           <Text style={styles.username}>{name}</Text>
           <Text style={styles.facultyName}>{subtitle || faculty}</Text>
         </Layout>
-        {showIcons && (
+        {onAccept && onDecline && (
           <Layout style={styles.iconContainer}>
-            <Image
-              style={styles.acceptDeclineIcon}
-              source={require('../icons/decline.png')}
-            />
-            <Image
-              style={styles.acceptDeclineIcon}
-              source={require('../icons/accept.png')}
-            />
+            <TouchableWithoutFeedback onPress={onDecline}>
+              <Image
+                style={styles.acceptDeclineIcon}
+                source={require('../icons/decline.png')}
+              />
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={onAccept}>
+              <Image
+                style={styles.acceptDeclineIcon}
+                source={require('../icons/accept.png')}
+              />
+            </TouchableWithoutFeedback>
           </Layout>
         )}
       </Layout>

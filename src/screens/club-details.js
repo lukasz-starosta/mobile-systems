@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
 import { Text, Avatar, Icon } from 'react-native-ui-kitten';
@@ -6,11 +6,63 @@ import CountTracker from '../components/count-tracker';
 import CustomButton from '../components/button';
 import colors from '../constants/colors';
 import Post from '../components/post';
+import LoadingStatus from '../components/loading';
+import database from '../api/database';
+import { ClubStatus } from '../constants/types';
 
-const ClubDetailsScreen = ({ navigation }) => {
+async function fetchMemberStatus(club, user, setApplyButtonDisabled) {
+  const members = await database.getMembersOfClub(club.uid, [
+    ClubStatus.PENDING,
+    ClubStatus.ADMIN,
+    ClubStatus.FOUNDER,
+    ClubStatus.MEMBER,
+  ]);
+  const findById = member => member.uid === user.uid;
+  const isMemberAlready = typeof members.find(findById) !== 'undefined';
+
+  if (isMemberAlready) setApplyButtonDisabled(true);
+  else setApplyButtonDisabled(false);
+}
+
+const fetchMembersFun = (club, setMembers) => async () => {
+  setMembers(
+    await database.getMembersOfClub(club.uid, [
+      ClubStatus.ADMIN,
+      ClubStatus.FOUNDER,
+      ClubStatus.MEMBER,
+    ]),
+  );
+};
+
+const ClubDetailsScreen = ({ navigation, user }) => {
   const club = navigation.state.params;
   const name = (club && club.name) || 'Długa nazwa koła';
   const faculty = (club && club.faculty) || 'Jeszcze dłuższa nazwa wydziału';
+
+  const [applyButtonDisabled, setApplyButtonDisabled] = useState(true);
+  const [applyInProgress, setApplyInProgress] = useState(false);
+  const [members, setMembers] = useState(null);
+
+  const fetchMembers = fetchMembersFun(club, setMembers);
+
+  useEffect(() => {
+    fetchMemberStatus(club, user, setApplyButtonDisabled);
+    fetchMembers();
+  }, []);
+
+  const handleApply = async () => {
+    setApplyInProgress(true);
+    await database.addMember({
+      club_id: club.uid,
+      user_id: user.uid,
+      status: 'pending',
+    });
+    await fetchMemberStatus(club, user, setApplyButtonDisabled);
+    setApplyInProgress(false);
+  };
+
+  if (applyInProgress || !members) return <LoadingStatus />;
+
   return (
     <>
       <ScreenContainer scrollable styleProps={styles.screenContainer}>
@@ -25,14 +77,23 @@ const ClubDetailsScreen = ({ navigation }) => {
             <View style={styles.counters}>
               <CountTracker
                 title="członków"
-                count="321"
+                count={members.length}
                 handlePress={() =>
-                  navigation.navigate('ClubMembers', { clubName: name })
+                  navigation.navigate('ClubMembers', {
+                    club,
+                    members,
+                    fetchMembers,
+                  })
                 }
               />
               <CountTracker title="ogłoszeń" count="167" />
             </View>
-            <CustomButton title="Aplikuj" styleProps={styles.button} />
+            <CustomButton
+              title="Aplikuj"
+              disabled={applyButtonDisabled || applyInProgress}
+              onPress={handleApply}
+              styleProps={styles.button}
+            />
           </View>
         </View>
         <View style={{ marginTop: 3 }}>

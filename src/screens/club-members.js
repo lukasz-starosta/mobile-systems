@@ -4,21 +4,32 @@ import UserAvatar from '../components/user-avatar';
 import ScreenContainer from '../layout/screen-container';
 import { SectionTitle } from '../components/texts-containers';
 import CustomButton from '../components/button';
+import { ReadableClubStatus } from '../constants/types';
 
 function ClubMembersScreen({ navigation }) {
-  const { clubName } = navigation.state.params;
+  const { club, members, fetchMembers } = navigation.state.params;
 
   return (
     <>
       <ScreenContainer title="Członkowie">
-        <SectionTitle>{clubName}</SectionTitle>
-        <UserAvatar navigation={navigation} subtitle="Administrator" />
-        <UserAvatar navigation={navigation} subtitle="członek" />
-        <UserAvatar navigation={navigation} subtitle="członek" />
+        <SectionTitle>{club.name}</SectionTitle>
+        {members.map(member => (
+          <UserAvatar
+            navigation={navigation}
+            user={member}
+            subtitle={ReadableClubStatus[member.status]}
+            key={member.uid}
+          />
+        ))}
       </ScreenContainer>
       <View style={styles.floatingButton}>
         <CustomButton
-          onPress={() => navigation.navigate('ClubJoinRequests', { clubName })}
+          onPress={() =>
+            navigation.navigate('ClubJoinRequests', {
+              club,
+              fetchMembers,
+            })
+          }
           title="Prośby o dołączenie"
         />
       </View>

@@ -111,6 +111,7 @@ const database = {
     await this.collection('clubs')
       .orderBy('_name')
       .startAt(name.toLowerCase())
+      .endAt(name.toLowerCase() + '\uf8ff')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -169,7 +170,7 @@ const database = {
   },
 
   async getMembersOfClub(clubId, status = []) {
-    const memberIds = [];
+    const members = [];
 
     const collectionRef =
       status.length === 0
@@ -180,19 +181,25 @@ const database = {
 
     await collectionRef.get().then(querySnapshot => {
       querySnapshot.forEach(doc => {
-        memberIds.push(doc.data().user_id);
+        members.push({ ...doc.data(), memberId: doc.id });
       });
     });
 
-    const members = [];
+    if (members.length === 0) return [];
+    const users = [];
 
-    for (let i = 0; i < memberIds.length; i++) {
-      const user = await this.getUser(memberIds[i]);
+    for (let i = 0; i < members.length; i++) {
+      const user = await this.getUser(members[i].user_id);
 
-      members.push(user);
+      users.push({
+        ...user,
+        memberId: members[i].memberId,
+        uid: members[i].user_id,
+        status: members[i].status,
+      });
     }
 
-    return members;
+    return users;
   },
 
   async getClubsOfUser(userId, status = []) {
@@ -223,7 +230,11 @@ const database = {
   },
 
   async updateMember(memberId, memberData) {
-    this.document('members', memberId).update(memberData);
+    return await this.document('members', memberId).update(memberData);
+  },
+
+  async deleteMember(memberId) {
+    return await this.document('members', memberId).delete();
   },
 
   // posts

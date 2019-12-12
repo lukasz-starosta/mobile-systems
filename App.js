@@ -81,7 +81,7 @@ const getAppContainer = passedProps => {
         screen: props => <CreateClubScreen {...props} {...passedProps} />,
       },
       ClubDetails: {
-        screen: ClubDetailsScreen,
+        screen: props => <ClubDetailsScreen {...props} {...passedProps} />,
       },
       AddingPost: {
         screen: AddingPostsScreen,
