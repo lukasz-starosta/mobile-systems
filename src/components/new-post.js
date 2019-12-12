@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -8,42 +8,79 @@ import {
 } from 'react-native';
 import { Layout, Text, Icon } from 'react-native-ui-kitten';
 import colors from '../constants/colors';
+import Button from '../components/button';
+import database from '../api/database';
 
-function NewPost() {
+function NewPost({ navigation, club, loading }) {
+  const [post, setPost] = useState({
+    club_id: club.uid,
+    content: '',
+    title: '',
+  });
+
+  function handlePostCreation() {
+    loading.setTrue();
+    async function createPost() {
+      await database.addPost(post);
+      loading.setFalse();
+      navigation.navigate('ClubDetails', club);
+    }
+    createPost();
+  }
+
   return (
-    <Layout style={styles.textStyle}>
-      <View>
-        <TextInput style={styles.titleStyle}>Tytuł ogłoszenia</TextInput>
-
-        <Text style={styles.dateStyle}>Styczeń 23, 2019 10:00</Text>
-        <KeyboardAvoidingView behaviour="padding" enabled>
+    <>
+      <Layout style={styles.textStyle}>
+        <View>
           <TextInput
-            multiline={true}
-            scrollEnabled={true}
-            style={styles.contentStyle}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.{' '}
-          </TextInput>
-        </KeyboardAvoidingView>
-      </View>
-      <TouchableWithoutFeedback>
-        <View style={styles.imageIconStyle}>
-          <Icon
-            name="image-outline"
-            width={30}
-            height={30}
-            fill={colors.politechnika}
+            style={styles.titleStyle}
+            placeholder="Tytuł"
+            onChangeText={text => {
+              setPost(previous => {
+                return { ...previous, title: text };
+              });
+            }}
           />
-          <Text>Dodaj zdjęcia</Text>
+          <KeyboardAvoidingView behaviour="padding" enabled>
+            <TextInput
+              multiline
+              scrollEnabled
+              style={styles.contentStyle}
+              onChangeText={text => {
+                setPost(previous => {
+                  return { ...previous, content: text };
+                });
+              }}
+            />
+          </KeyboardAvoidingView>
         </View>
-      </TouchableWithoutFeedback>
-    </Layout>
+        <TouchableWithoutFeedback>
+          <View style={styles.imageIconStyle}>
+            <Icon
+              name="image-outline"
+              width={30}
+              height={30}
+              fill={colors.politechnika}
+            />
+            <Text>Dodaj zdjęcia</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </Layout>
+      <View style={styles.bottom}>
+        <Button title="Opublikuj" onPress={handlePostCreation} />
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
+  bottom: {
+    bottom: 25,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    elevation: 16,
+  },
   textStyle: {
     justifyContent: 'space-between',
     borderRadius: 15,
@@ -60,14 +97,9 @@ const styles = StyleSheet.create({
     color: colors.politechnika,
     fontSize: 23,
   },
-  dateStyle: {
-    fontWeight: 'bold',
-    marginLeft: 4,
-    color: colors.labelGrey,
-  },
   contentStyle: {
     textAlignVertical: 'top',
-    maxHeight: 220
+    maxHeight: 220,
   },
   imageIconStyle: {
     alignItems: 'center',

@@ -280,8 +280,13 @@ const database = {
     return posts;
   },
 
-  async addPost(post) {
-    this.collection('posts').add(post);
+  async addPost(postData) {
+    const post = {
+      ...postData,
+      created_at: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+
+    await this.collection('posts').add(post);
   },
 
   async updatePost(postId, postData) {
