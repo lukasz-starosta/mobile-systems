@@ -7,7 +7,7 @@ import DashboardScreen from '../screens/dashboard';
 import ExploreScreen from '../screens/explore';
 import FavoritesScreen from '../screens/favorites';
 import ProfileScreen from '../screens/profile';
-import colors from '../constants/colors'
+import colors from '../constants/colors';
 
 const routes = {
   Dashboard: {
@@ -28,20 +28,26 @@ const routes = {
   },
 };
 
-function Navigation( props ) {
-  const AppContainer = getAppContainer( props );
-  return (
-    <AppContainer />
-  );
-};
+function Navigation(props) {
+  const AppContainer = getAppContainer(props);
+  return <AppContainer />;
+}
 
 const getAppContainer = passedProps => {
   const TabNavigator = createBottomTabNavigator(
     {
-      Dashboard: { screen: DashboardScreen },
-      Explore: { screen: ExploreScreen },
-      Favorites: { screen: FavoritesScreen },
-      Profile: { screen: props => <ProfileScreen {...props} {...passedProps} /> },
+      Dashboard: {
+        screen: props => <DashboardScreen {...props} {...passedProps} />,
+      },
+      Explore: {
+        screen: props => <ExploreScreen {...props} {...passedProps} />,
+      },
+      Favorites: {
+        screen: props => <FavoritesScreen {...props} {...passedProps} />,
+      },
+      Profile: {
+        screen: props => <ProfileScreen {...props} {...passedProps} />,
+      },
     },
     {
       defaultNavigationOptions: ({ navigation }) => {
@@ -65,6 +71,6 @@ const getAppContainer = passedProps => {
     },
   );
   return createAppContainer(TabNavigator);
-}
+};
 
 export default Navigation;
