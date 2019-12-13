@@ -274,8 +274,21 @@ const database = {
       ...postData,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
     };
+    const images = post.images;
 
-    await this.collection('posts').add(post);
+    delete post.images;
+
+    const postId = await this.collection('posts')
+      .add(post)
+      .then(doc => {
+        return doc.id;
+      });
+
+    for (let i = 0; i < images.length; i++) {
+      await this.document('posts', postId)
+        .collection('images')
+        .add({ uri: images[i] });
+    }
   },
 
   async updatePost(postId, postData) {
