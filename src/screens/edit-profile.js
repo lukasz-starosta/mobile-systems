@@ -18,73 +18,163 @@ import RNFetchBlob from 'rn-fetch-blob';
 import LoadingStatus from '../components/loading';
 
 function EditProfileScreen({ navigation }) {
-  const user = navigation.state.params;
+  const { user } = navigation.state.params;
+  console.log(user.name);
   const [data, setData] = useState({
-    name: (user && user.name) || '',
-    surname: (user && user.surname) || '',
-    faculty: (user && user.faculty) || '',
-    degree: (user && user.degree) || '',
+    name: user.name,
+    surname: user.surname,
+    faculty: user.faculty,
+    degree: user.degree,
   });
   const [image, setImage] = useState({
     uri: '',
-    src: (user && user.avatar) || 'http://d310a9hpolx59w.cloudfront.net/product_photos/61275063/file_fe49049719_original.jpg',
+    src: user.avatar
   });
+  const [changedData, setChangedData] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const options = {
+    title: 'Wybierz zdjęcie profilowe',
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+    },
+  };
+
+  const openImagePicker = () => {
+    ImagePicker.showImagePicker(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const source = {
+          uri: response.uri,
+          src: 'data:image/jpeg;base64,' + response.data,
+        };
+
+        setImage(source);
+      }
+    });
+  };
+
+  const uploadImage = (uri, mime = 'application/octet-stream') => {
+    const Blob = RNFetchBlob.polyfill.Blob;
+    const fs = RNFetchBlob.fs;
+    const blob = window.Blob;
+    const xhr = window.XMLHttpRequest;
+    window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+    window.Blob = Blob;
+
+    return new Promise((resolve, reject) => {
+      let uploadBlob = null;
+
+      fs.readFile(uri, 'base64')
+        .then(data => {
+          return Blob.build(data, { type: `${mime};BASE64` });
+        })
+        .then(async blob => {
+          uploadBlob = blob;
+          return await storage.upload(
+            blob,
+            { contentType: mime },
+            user.name + '_profile_picture',
+          );
+        })
+        .then(url => {
+          uploadBlob.close();
+          resolve(url);
+        })
+        .catch(error => {
+          reject(error);
+        })
+        .finally(() => {
+          window.XMLHttpRequest = xhr;
+          window.Blob = blob;
+        });
+    });
+  };
+
+  const handleProfileEdition = () => {
+    const editProfile = async () => {
+      setLoading(true);
+      if(image.uri != ''){
+        const url = await uploadImage(image.uri);
+        setChangedData(rest => {return {...rest, avatar: url}});
+      }
+      if (data.name != user.name) {setChangedData(rest => {return {...rest, name: data.name}})};
+      if (data.surname != user.surname) {setChangedData(rest => {return {...rest, surname: data.surname}})};
+      if (data.faculty != user.faculty) {setChangedData(rest => {return {...rest, faculty: data.faculty}})};
+      if (data.degree != user.degree) {setChangedData(rest => {return {...rest, degree: data.degree}})};
+      await database.updateUser(user.uid, changedData);
+      navigation.navigate('Profile');
+      setLoading(false);
+    };
+    editProfile();
+  };
+
+  if (loading) return <LoadingStatus />;
+
   return (
     <ScreenContainer noStyle>
       <ScrollView>
         <View style={{ marginTop: 5, marginBottom: 40 }}>
           <Form
             title="Edytuj profil"
-            button={{ title: 'Edytuj' }}
+            button={{ title: 'Edytuj', onPress: handleProfileEdition }}
             styleProps={styles.form}>
             <View>
               <Text style={styles.label}>IMIĘ</Text>
               <TextInput
                 style={styles.input}
-              // onChangeText={text => {
-              //   updateUser(rest => {
-              //     return { ...rest, name: text };
-              //   });
-              // }}
-              >{data.name}</TextInput>
+                value={data.name}
+              onChangeText={text => {
+                setData(rest => {
+                  return { ...rest, name: text };
+                });
+              }}
+              />
             </View>
             <View>
               <Text style={styles.label}>NAZWISKO</Text>
               <TextInput
                 style={styles.input}
-              // onChangeText={text => {
-              //   updateUser(rest => {
-              //     return { ...rest, surname: text };
-              //   });
-              // }}
-              >{data.surname}</TextInput>
+                value={data.surname}
+              onChangeText={text => {
+                setData(rest => {
+                  return { ...rest, surname: text };
+                });
+              }}
+              />
             </View>
             <View>
               <Text style={styles.label}>WYDZIAŁ</Text>
               <TextInput
                 style={styles.input}
-              // onChangeText={text => {
-              //   updateUser(rest => {
-              //     return { ...rest, faculty: text };
-              //   });
-              // }}
-              >{data.faculty}</TextInput>
+                value={data.faculty}
+              onChangeText={text => {
+                setData(rest => {
+                  return { ...rest, faculty: text };
+                });
+              }}
+              />
             </View>
             <View>
               <Text style={styles.label}>KIERUNEK</Text>
               <TextInput
                 style={styles.input}
-              // onChangeText={text => {
-              //   updateUser(rest => {
-              //     return { ...rest, degree: text };
-              //   });
-              // }}
-              >{data.degree}</TextInput>
+                value={data.degree}
+              onChangeText={text => {
+                setData(rest => {
+                  return { ...rest, degree: text };
+                });
+              }}
+              />
             </View>
             <View>
               <Text style={styles.label}>ZDJĘCIE PROFILOWE</Text>
               <View>
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={openImagePicker}>
                   <Image source={{ uri: image.src }} style={styles.icon} />
                 </TouchableWithoutFeedback>
               </View>

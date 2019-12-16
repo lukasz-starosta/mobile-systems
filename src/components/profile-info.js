@@ -4,39 +4,44 @@ import { TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
 import colors from '../constants/colors';
 import { Icon } from 'react-native-ui-kitten';
 import database from '../api/database';
+import LoadingStatus from '../components/loading';
 
 function ProfileInfo({ navigation, user }) {
+
+  const [data, setData] = useState(null);
+
   useEffect(() => {
-  });
-  const currentUser = database.getUser(user.uid);
-  const name = (currentUser && currentUser.name) || 'Brak imienia';
-  const surname = (currentUser && currentUser.surname) || 'Brak nazwiska';
-  const faculty = (currentUser && currentUser.faculty) || 'Brak wydziału';
-  const degree = (currentUser && currentUser.degree) || 'Brak kierunku';
-  const email = (currentUser && currentUser.email) || 'Brak emaila'
+    const fetchUserById = async () => {
+      setData(await database.getUser(user.uid));
+    };
+    fetchUserById();
+  }, []);
+
+  if (!data) return <LoadingStatus />;
+
   return (
     <Layout>
       <Layout style={styles.imageContainer}>
         <Avatar
           style={styles.image}
           source={{
-            uri: 'https://i.imgur.com/2y3Sm4x.jpg',
+            uri: data.avatar
           }}
         />
       </Layout>
       <Layout style={styles.textContainer}>
-        <Text style={styles.name}>{name} {surname}</Text>
-        <Text style={styles.everythingElse}>{email}</Text>
-        <Text style={styles.everythingElse}>{faculty}</Text>
-        <Text style={styles.lastOne}>{degree}</Text>
+        <Text style={styles.name}>{data.name} {data.surname}</Text>
+        <Text style={styles.everythingElse}>{data.email}</Text>
+        <Text style={styles.everythingElse}>{data.faculty}</Text>
+        <Text style={styles.lastOne}>{data.degree}</Text>
         <View style={styles.icon}>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('EditProfile')}>
-              <Icon
-                name='edit-outline'
-                width={30}
-                height={30}
-                fill={colors.politechnika}
-              />
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('EditProfile', {user: {...user, ...data}})}>
+            <Icon
+              name='edit-outline'
+              width={30}
+              height={30}
+              fill={colors.politechnika}
+            />
           </TouchableWithoutFeedback>
         </View>
       </Layout>
