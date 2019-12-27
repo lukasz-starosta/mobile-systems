@@ -7,7 +7,7 @@ import CustomButton from '../components/button';
 import { ReadableClubStatus } from '../constants/types';
 
 function ClubMembersScreen({ navigation }) {
-  const { club, members, fetchMembers } = navigation.state.params;
+  const { club, members, fetchMembers, isAdmin } = navigation.state.params;
 
   return (
     <>
@@ -22,17 +22,19 @@ function ClubMembersScreen({ navigation }) {
           />
         ))}
       </ScreenContainer>
-      <View style={styles.floatingButton}>
-        <CustomButton
-          onPress={() =>
-            navigation.navigate('ClubJoinRequests', {
-              club,
-              fetchMembers,
-            })
-          }
-          title="Prośby o dołączenie"
-        />
-      </View>
+      {isAdmin && (
+        <View style={styles.floatingButton}>
+          <CustomButton
+            onPress={() =>
+              navigation.navigate('ClubJoinRequests', {
+                club,
+                fetchMembers,
+              })
+            }
+            title="Prośby o dołączenie"
+          />
+        </View>
+      )}
     </>
   );
 }
