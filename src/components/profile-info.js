@@ -9,11 +9,12 @@ import LoadingStatus from '../components/loading';
 function ProfileInfo({ navigation, user }) {
 
   const [data, setData] = useState(null);
+  
+  const fetchUserById = async () => {
+    setData(await database.getUser(user.uid));
+  };
 
   useEffect(() => {
-    const fetchUserById = async () => {
-      setData(await database.getUser(user.uid));
-    };
     fetchUserById();
   }, []);
 
@@ -35,7 +36,7 @@ function ProfileInfo({ navigation, user }) {
         <Text style={styles.everythingElse}>{data.faculty}</Text>
         <Text style={styles.lastOne}>{data.degree}</Text>
         <View style={styles.icon}>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('EditProfile', {user: {...user, ...data}})}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate('EditProfile', {user: {...user, ...data}, fetchUserById: fetchUserById})}>
             <Icon
               name='edit-outline'
               width={30}

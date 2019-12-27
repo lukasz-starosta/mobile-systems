@@ -18,8 +18,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import LoadingStatus from '../components/loading';
 
 function EditProfileScreen({ navigation }) {
-  const { user } = navigation.state.params;
-  console.log(user.name);
+  const { user, fetchUserById } = navigation.state.params;
   const [data, setData] = useState({
     name: user.name,
     surname: user.surname,
@@ -94,21 +93,26 @@ function EditProfileScreen({ navigation }) {
         });
     });
   };
+  
+  const checkIfChanged = async () => {
+    if(image.uri != ''){
+      const url = await uploadImage(image.uri);
+      setChangedData(rest => {return {...rest, avatar: url}});
+    }
+    if (data.name != user.name) {setChangedData(rest => {return {...rest, name: data.name}})};
+    if (data.surname != user.surname) {setChangedData(rest => {return {...rest, surname: data.surname}})};
+    if (data.faculty != user.faculty) {setChangedData(rest => {return {...rest, faculty: data.faculty}})};
+    if (data.degree != user.degree) {setChangedData(rest => {return {...rest, degree: data.degree}})};
+  }
 
   const handleProfileEdition = () => {
     const editProfile = async () => {
       setLoading(true);
-      if(image.uri != ''){
-        const url = await uploadImage(image.uri);
-        setChangedData(rest => {return {...rest, avatar: url}});
-      }
-      if (data.name != user.name) {setChangedData(rest => {return {...rest, name: data.name}})};
-      if (data.surname != user.surname) {setChangedData(rest => {return {...rest, surname: data.surname}})};
-      if (data.faculty != user.faculty) {setChangedData(rest => {return {...rest, faculty: data.faculty}})};
-      if (data.degree != user.degree) {setChangedData(rest => {return {...rest, degree: data.degree}})};
+      await checkIfChanged(); 
       await database.updateUser(user.uid, changedData);
-      navigation.navigate('Profile');
-      setLoading(false);
+      fetchUserById();
+      setLoading(false);  
+      // navigation.goBack();
     };
     editProfile();
   };
