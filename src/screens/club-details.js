@@ -44,6 +44,7 @@ const ClubDetailsScreen = ({ navigation, user, founder, isAdmin }) => {
   const contact_email =
     (club && club.contact_email) || 'Brak maila kontaktowego.';
   const web_page = (club && club.web_page) || 'Brak strony internetowej.';
+  const founder_info = founder.name + ' ' + founder.surname;
 
   const [applyButtonDisabled, setApplyButtonDisabled] = useState(true);
   const [applyInProgress, setApplyInProgress] = useState(false);
@@ -120,9 +121,7 @@ const ClubDetailsScreen = ({ navigation, user, founder, isAdmin }) => {
               height={16}
               fill={colors.politechnika}
             />
-            <Text style={styles.infoText}>
-              {founder.name + ' ' + founder.surname}
-            </Text>
+            <Text style={styles.infoText}>{founder_info}</Text>
           </View>
           <View style={styles.infoContainer}>
             <Icon
