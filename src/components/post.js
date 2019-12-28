@@ -3,17 +3,21 @@ import { StyleSheet } from 'react-native';
 import { Layout, Text } from 'react-native-ui-kitten';
 import { TouchableWithoutFeedback } from 'react-native';
 
-function Post({ clubName, navigation }) {
+function Post({ post, clubName, navigation }) {
   return (
     <Layout style={styles.container}>
       {clubName && <Text style={styles.clubName}>Nazwa koła</Text>}
-      <Text style={styles.postTitle}>Tytuł</Text>
+      <Text style={styles.postTitle}>{(post && post.title) || 'Tytuł'}</Text>
       <Layout>
         <Text style={styles.postContent}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          in posuere nunc. Proin laoreet placerat quam...{' '}
+          {(post && post.content.slice(0, post.content.length / 1.5) + '...') ||
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse in posuere nunc. Proin laoreet placerat quam...'}
           <TouchableWithoutFeedback>
-            <Text style={styles.seeMore} onPress={() => navigation.navigate('WholePost')}>Zobacz więcej...</Text>
+            <Text
+              style={styles.seeMore}
+              onPress={() => navigation.navigate('WholePost', post)}>
+              Zobacz więcej...
+            </Text>
           </TouchableWithoutFeedback>
         </Text>
       </Layout>

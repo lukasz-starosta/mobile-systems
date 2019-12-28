@@ -5,7 +5,8 @@ import NewPost from '../components/new-post';
 import LoadingStatus from '../components/loading';
 
 function AddingPostsScreen({ navigation }) {
-  const club = navigation.state.params;
+  const club = navigation.state.params.club;
+  const fetchPosts = navigation.state.params.fetchPosts;
   const [loading, setLoading] = useState(false);
 
   if (loading) return <LoadingStatus />;
@@ -24,6 +25,7 @@ function AddingPostsScreen({ navigation }) {
           navigation={navigation}
           club={club}
           loading={{ setFalse: setLoadingFalse, setTrue: setLoadingTrue }}
+          fetchPosts={fetchPosts}
         />
       </View>
     </ScreenContainer>
