@@ -63,7 +63,7 @@ function DashboardScreen({ navigation, user }) {
     <ScreenContainer title="Tablica" scrollable>
       <SectionTitle>Najnowsze ogłoszenia</SectionTitle>
       {posts.length > 0 ? (
-        posts.map(post => (
+        posts.slice(0,3).map(post => (
           <Post key={post.uid} navigation={navigation} post={post} />
         ))
       ) : (

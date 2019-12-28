@@ -4,7 +4,17 @@ import { Layout, Text } from 'react-native-ui-kitten';
 import { TouchableWithoutFeedback } from 'react-native';
 
 function Post({ post, navigation }) {
-  const clubName = (post && post.clubName) || '';
+  const clubName = (post && post.clubName) || false;
+
+  const contentPreview = () => {
+    if (post.content.length > 200) {
+      return post.content.slice(0, 200) + '...';
+    } else if (post.content.length < 100) {
+      return post.content;
+    } else {
+      return post.content.slice(0, post.content.length / 1.5) + '...';
+    }
+  };
 
   return (
     <Layout style={styles.container}>
@@ -12,7 +22,7 @@ function Post({ post, navigation }) {
       <Text style={styles.postTitle}>{(post && post.title) || 'Tytuł'}</Text>
       <Layout>
         <Text style={styles.postContent}>
-          {(post && post.content.slice(0, post.content.length / 1.5) + '...') ||
+          {(post && contentPreview()) ||
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse in posuere nunc. Proin laoreet placerat quam...'}
           <TouchableWithoutFeedback>
             <Text
