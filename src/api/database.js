@@ -309,6 +309,23 @@ const database = {
   async updatePost(postId, postData) {
     this.document('posts', postId).update(postData);
   },
+
+  async getPhotosOfPost(postId) {
+    const images = [];
+
+    await this.document('posts', postId)
+      .collection('images')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const image = { ...doc.data(), uid: doc.id };
+
+          images.push(image);
+        });
+      });
+
+    return images;
+  },
 };
 
 export default database;
