@@ -36,8 +36,6 @@ function WholePostScreen({ navigation }) {
 
   useEffect(fetchImages, []);
 
-  console.log(images);
-
   if (isLoading) return <LoadingStatus />;
 
   return (

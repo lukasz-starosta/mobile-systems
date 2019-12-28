@@ -3,10 +3,12 @@ import { StyleSheet } from 'react-native';
 import { Layout, Text } from 'react-native-ui-kitten';
 import { TouchableWithoutFeedback } from 'react-native';
 
-function Post({ post, clubName, navigation }) {
+function Post({ post, navigation }) {
+  const clubName = (post && post.clubName) || '';
+
   return (
     <Layout style={styles.container}>
-      {clubName && <Text style={styles.clubName}>Nazwa koła</Text>}
+      {clubName && <Text style={styles.clubName}>{clubName}</Text>}
       <Text style={styles.postTitle}>{(post && post.title) || 'Tytuł'}</Text>
       <Layout>
         <Text style={styles.postContent}>

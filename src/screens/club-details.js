@@ -68,8 +68,6 @@ const ClubDetailsScreen = ({ navigation, user, founder, isAdmin }) => {
     fetchPosts();
   }, []);
 
-  console.log(posts);
-
   const handleApply = async () => {
     setApplyInProgress(true);
     await database.addMember({
