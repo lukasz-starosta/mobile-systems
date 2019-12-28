@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Text } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
-import CustomButton from '../components/button';
 import { SectionTitle } from '../components/texts-containers';
 import Post from '../components/post';
 import Club from '../components/club';
@@ -62,9 +62,13 @@ function DashboardScreen({ navigation, user }) {
   return (
     <ScreenContainer title="Tablica" scrollable>
       <SectionTitle>Najnowsze ogłoszenia</SectionTitle>
-      {posts.map(post => (
-        <Post key={post.uid} navigation={navigation} post={post} />
-      ))}
+      {posts.length > 0 ? (
+        posts.map(post => (
+          <Post key={post.uid} navigation={navigation} post={post} />
+        ))
+      ) : (
+        <Text>Nie jesteś członkiem żadnych kół</Text>
+      )}
       <SectionTitle>Proponowane koła</SectionTitle>
       {clubs.slice(0, 3).map(club => (
         <Club club={club} key={club.uid} navigation={navigation} />
