@@ -141,6 +141,10 @@ const database = {
     return clubs;
   },
 
+  async getClubsOfFaculty(faculty) {
+    return await this.getClubsWhere('faculty', '==', faculty);
+  },
+
   async setClub(clubData) {
     const club = this.document('clubs', clubData.uid);
 

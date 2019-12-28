@@ -6,17 +6,29 @@ import Club from '../components/club';
 import database from '../api/database';
 import LoadingStatus from '../components/loading';
 import colors from '../constants/colors';
+import { SEARCH_BY } from '../constants/types';
 
 function SearchResultsScreen({ navigation }) {
-  const { value } = navigation.state.params;
+  const { searchBy, value } = navigation.state.params;
 
   const [clubs, setClubs] = useState(null);
 
   useEffect(() => {
-    const fetchClubsByName = async () => {
-      setClubs(await database.getClubsByName(value));
+    const fetchClubs = async () => {
+      switch (searchBy) {
+        case SEARCH_BY.NAME:
+          setClubs(await database.getClubsByName(value));
+          break;
+        case SEARCH_BY.FACULTY:
+          setClubs(await database.getClubsOfFaculty(value));
+          break;
+
+        default:
+          break;
+      }
     };
-    fetchClubsByName();
+
+    fetchClubs();
   }, []);
 
   if (!clubs) return <LoadingStatus />;
@@ -27,7 +39,7 @@ function SearchResultsScreen({ navigation }) {
 
   const noResults = (
     <Text style={styles.noResults}>
-      {`Brak kół o nazwie zaczynającej się na "${value}"`}
+      {`Nie znaleziono kół dla zapytania: ${value}`}
     </Text>
   );
 
@@ -37,7 +49,7 @@ function SearchResultsScreen({ navigation }) {
         <SearchBar
           placeholder="Szukaj..."
           navigation={navigation}
-          initialValue={value}
+          initialValue={searchBy === SEARCH_BY.NAME ? value : ''}
         />
       </View>
       <View style={styles.clubsSection}>
