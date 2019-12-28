@@ -43,8 +43,8 @@ const App = () => {
     database.initialize(firebase.firestore());
     storage.initialize(firebase.storage());
 
-    firebase.auth().onAuthStateChanged(authUser => {
-      setUser(authUser ? authUser : null);
+    firebase.auth().onAuthStateChanged(async authUser => {
+      setUser(authUser ? await database.getUser(authUser.uid) : null);
       setloading(false);
     });
   }, []);
