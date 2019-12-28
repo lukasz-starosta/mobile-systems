@@ -95,7 +95,9 @@ const getAppContainer = passedProps => {
       ClubJoinRequests: {
         screen: ClubJoinRequestsScreen,
       },
-      App: Navigation,
+      App: {
+        screen: props => <Navigation {...props} {...passedProps} />,
+      },
     },
     {
       initialRouteName: passedProps.user ? 'App' : 'SignIn',
