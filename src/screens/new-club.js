@@ -16,6 +16,7 @@ import storage from '../api/storage';
 import database from '../api/database';
 import RNFetchBlob from 'rn-fetch-blob';
 import LoadingStatus from '../components/loading';
+import { FacultiesSelect } from '../components/faculties-select';
 
 const CreateClubScreen = ({ navigation, user }) => {
   const [club, setClub] = useState({
@@ -99,7 +100,7 @@ const CreateClubScreen = ({ navigation, user }) => {
     const createClub = async () => {
       setLoading(true);
 
-      const url = await uploadImage(image.uri);
+      const url = image.uri ? await uploadImage(image.uri) : image.src;
 
       const clubId = await database.addClub({ ...club, icon: url });
 
@@ -166,13 +167,10 @@ const CreateClubScreen = ({ navigation, user }) => {
             </View>
             <View>
               <Text style={styles.label}>WYDZIAŁ</Text>
-              <TextInput
+              <FacultiesSelect
                 style={styles.input}
-                onChangeText={text => {
-                  setClub(rest => {
-                    return { ...rest, faculty: text };
-                  });
-                }}
+                selectedOption={club.faculty}
+                onSelect={opt => setClub(rest => ({ ...rest, faculty: opt }))}
               />
             </View>
             <View>
