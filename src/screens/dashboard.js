@@ -28,7 +28,7 @@ function DashboardScreen({ navigation, user }) {
       <Post clubName navigation={navigation} />
       <Post clubName navigation={navigation} />
       <SectionTitle>Proponowane koła</SectionTitle>
-      {clubs.map(club => (
+      {clubs.slice(0, 3).map(club => (
         <Club club={club} key={club.uid} navigation={navigation} />
       ))}
     </ScreenContainer>
