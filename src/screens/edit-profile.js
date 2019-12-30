@@ -16,6 +16,7 @@ import storage from '../api/storage';
 import database from '../api/database';
 import RNFetchBlob from 'rn-fetch-blob';
 import LoadingStatus from '../components/loading';
+import { FacultiesSelect } from '../components/faculties-select';
 
 function EditProfileScreen({ navigation }) {
   const { user, fetchUserById } = navigation.state.params;
@@ -121,7 +122,7 @@ function EditProfileScreen({ navigation }) {
 
   return (
     <ScreenContainer noStyle>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps='always'>
         <View style={{ marginTop: 5, marginBottom: 40 }}>
           <Form
             title="Edytuj profil"
@@ -153,14 +154,14 @@ function EditProfileScreen({ navigation }) {
             </View>
             <View>
               <Text style={styles.label}>WYDZIAŁ</Text>
-              <TextInput
+              <FacultiesSelect
                 style={styles.input}
-                value={data.faculty}
-              onChangeText={text => {
-                setData(rest => {
-                  return { ...rest, faculty: text };
-                });
-              }}
+                selectedOption={data.faculty}
+                onSelect={text => {
+                  setData(rest => {
+                    return { ...rest, faculty: text };
+                  });
+                }}
               />
             </View>
             <View>
