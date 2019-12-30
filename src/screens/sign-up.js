@@ -13,6 +13,7 @@ import colors from '../constants/colors';
 import Form from '../components/form';
 import Layout from '../layout/session-layout';
 import database from '../api/database';
+import { FacultiesSelect } from '../components/faculties-select';
 
 const SignUpScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -149,13 +150,10 @@ const SignUpScreen = ({ navigation }) => {
             </View>
             <View>
               <Text style={styles.label}>WYDZIAŁ</Text>
-              <TextInput
+              <FacultiesSelect
                 style={styles.input}
-                onChangeText={text => {
-                  setData(rest => {
-                    return { ...rest, faculty: text };
-                  });
-                }}
+                selectedOption={data.faculty}
+                onSelect={opt => setData(rest => ({ ...rest, faculty: opt }))}
               />
             </View>
             <View>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 import { Layout, Icon } from 'react-native-ui-kitten';
 import colors from '../constants/colors';
+import { SEARCH_BY } from '../constants/types';
 
 function SearchBar(props) {
   const { placeholder, navigation, initialValue } = props;
@@ -28,9 +29,13 @@ function SearchBar(props) {
         onSubmitEditing={() => {
           // Don't push other scren on stack to enable backing to explore with 1 click
           if (navigation.state.routeName === 'SearchResults') {
-            navigation.replace('SearchResults', { value });
+            navigation.replace('SearchResults', {
+              searchBy: SEARCH_BY.NAME,
+              value,
+            });
           } else {
             navigation.push('SearchResults', {
+              searchBy: SEARCH_BY.NAME,
               value,
             });
           }

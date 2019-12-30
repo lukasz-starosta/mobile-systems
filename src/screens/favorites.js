@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import ScreenContainer from '../layout/screen-container';
 import Club from '../components/club';
 import CustomButton from '../components/button';
+import LoadingStatus from '../components/loading';
+import database from '../api/database';
 
-function FavoritesScreen({ navigation }) {
+function FavoritesScreen({ navigation, user }) {
   const statusBarHeight = StatusBar.currentHeight;
+
+  const [loading, setLoading] = useState(true);
+  const [clubs, setClubs] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setClubs(await database.getClubsOfUser(user.uid));
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <LoadingStatus />;
 
   return (
     <ScreenContainer title="Moje koła">
-      <Club navigation={navigation} />
-      <Club navigation={navigation} />
-      <Club navigation={navigation} />
+      {clubs.map(club => (
+        <Club club={club} key={club.uid} navigation={navigation} />
+      ))}
       <View
         style={{
           ...styles.button,

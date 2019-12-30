@@ -9,6 +9,7 @@ import Post from '../components/post';
 import LoadingStatus from '../components/loading';
 import database from '../api/database';
 import { ClubStatus } from '../constants/types';
+import { withRoles } from '../api/roles-hoc';
 
 async function fetchMemberStatus(club, user, setApplyButtonDisabled) {
   const members = await database.getMembersOfClub(club.uid, [
@@ -34,10 +35,16 @@ const fetchMembersFun = (club, setMembers) => async () => {
   );
 };
 
-const ClubDetailsScreen = ({ navigation, user }) => {
+const ClubDetailsScreen = ({ navigation, user, founder, isAdmin }) => {
   const club = navigation.state.params;
   const name = (club && club.name) || 'Długa nazwa koła';
+  const icon = (club && club.icon) || 'https://i.imgur.com/2y3Sm4x.jpg';
   const faculty = (club && club.faculty) || 'Jeszcze dłuższa nazwa wydziału';
+  const description = (club && club.description) || '';
+  const contact_email =
+    (club && club.contact_email) || 'Brak maila kontaktowego.';
+  const web_page = (club && club.web_page) || 'Brak strony internetowej.';
+  const founder_info = founder.name + ' ' + founder.surname;
 
   const [applyButtonDisabled, setApplyButtonDisabled] = useState(true);
   const [applyInProgress, setApplyInProgress] = useState(false);
@@ -70,7 +77,7 @@ const ClubDetailsScreen = ({ navigation, user }) => {
           <Avatar
             style={styles.image}
             source={{
-              uri: 'https://i.imgur.com/2y3Sm4x.jpg',
+              uri: icon,
             }}
           />
           <View style={{ marginLeft: 5 }}>
@@ -83,6 +90,7 @@ const ClubDetailsScreen = ({ navigation, user }) => {
                     club,
                     members,
                     fetchMembers,
+                    isAdmin,
                   })
                 }
               />
@@ -103,12 +111,7 @@ const ClubDetailsScreen = ({ navigation, user }) => {
           <Text category="h6" style={styles.facultyName}>
             {faculty}
           </Text>
-          <Text style={{ marginTop: 5 }}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </Text>
+          <Text style={{ marginTop: 5 }}>{description}</Text>
         </View>
         <View style={styles.floatingContainer}>
           <View style={styles.infoContainer}>
@@ -118,7 +121,7 @@ const ClubDetailsScreen = ({ navigation, user }) => {
               height={16}
               fill={colors.politechnika}
             />
-            <Text style={styles.infoText}>Krzysztof Komarski (Mosquitio)</Text>
+            <Text style={styles.infoText}>{founder_info}</Text>
           </View>
           <View style={styles.infoContainer}>
             <Icon
@@ -127,7 +130,7 @@ const ClubDetailsScreen = ({ navigation, user }) => {
               height={16}
               fill={colors.politechnika}
             />
-            <Text style={styles.infoText}>example@edu.p.lodz.pl</Text>
+            <Text style={styles.infoText}>{contact_email}</Text>
           </View>
           <View style={styles.infoContainer}>
             <Icon
@@ -136,7 +139,7 @@ const ClubDetailsScreen = ({ navigation, user }) => {
               height={16}
               fill={colors.politechnika}
             />
-            <Text style={styles.infoText}>ww.komaryfujary.p.lodz.pl</Text>
+            <Text style={styles.infoText}>{web_page}</Text>
           </View>
         </View>
         <Text category="h3" style={styles.postsHeader}>
@@ -149,17 +152,19 @@ const ClubDetailsScreen = ({ navigation, user }) => {
           <Post navigation={navigation} />
         </View>
       </ScreenContainer>
-      <View style={styles.floatingButton}>
-        <CustomButton
-          title="Dodaj ogłoszenie"
-          onPress={() => navigation.navigate('AddingPost', club)}
-        />
-      </View>
+      {isAdmin && (
+        <View style={styles.floatingButton}>
+          <CustomButton
+            title="Dodaj ogłoszenie"
+            onPress={() => navigation.navigate('AddingPost', club)}
+          />
+        </View>
+      )}
     </>
   );
 };
 
-export default ClubDetailsScreen;
+export default withRoles(ClubDetailsScreen);
 
 const styles = StyleSheet.create({
   screenContainer: {

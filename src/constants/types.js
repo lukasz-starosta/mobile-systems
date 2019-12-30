@@ -13,3 +13,8 @@ export const ReadableClubStatus = {
   ['founder']: 'Założyciel',
   ['declined']: 'Odrzucony',
 };
+
+export const SEARCH_BY = {
+  NAME: 'name',
+  FACULTY: 'faculty',
+};
