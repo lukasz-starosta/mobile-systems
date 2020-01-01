@@ -49,12 +49,23 @@ const ClubDetailsScreen = ({ navigation, user, founder, isAdmin }) => {
   const [applyButtonDisabled, setApplyButtonDisabled] = useState(true);
   const [applyInProgress, setApplyInProgress] = useState(false);
   const [members, setMembers] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   const fetchMembers = fetchMembersFun(club, setMembers);
+
+  const fetchPosts = async () => {
+    const _posts = await database.getPostsWhere('club_id', '==', club.uid);
+    _posts.sort((a, b) =>
+      a.created_at < b.created_at ? 1 : b.created_at < a.created_at ? -1 : 0,
+    );
+
+    setPosts(_posts);
+  };
 
   useEffect(() => {
     fetchMemberStatus(club, user, setApplyButtonDisabled);
     fetchMembers();
+    fetchPosts();
   }, []);
 
   const handleApply = async () => {
@@ -94,7 +105,7 @@ const ClubDetailsScreen = ({ navigation, user, founder, isAdmin }) => {
                   })
                 }
               />
-              <CountTracker title="ogłoszeń" count="167" />
+              <CountTracker title="ogłoszeń" count={posts.length} />
             </View>
             <CustomButton
               title="Aplikuj"
@@ -146,17 +157,21 @@ const ClubDetailsScreen = ({ navigation, user, founder, isAdmin }) => {
           Najnowsze ogłoszenia
         </Text>
         <View style={{ marginBottom: 55 }}>
-          <Post navigation={navigation} />
-          <Post navigation={navigation} />
-          <Post navigation={navigation} />
-          <Post navigation={navigation} />
+          {posts.map(post => (
+            <Post navigation={navigation} post={post} key={post.uid} />
+          ))}
         </View>
       </ScreenContainer>
       {isAdmin && (
         <View style={styles.floatingButton}>
           <CustomButton
             title="Dodaj ogłoszenie"
-            onPress={() => navigation.navigate('AddingPost', club)}
+            onPress={() =>
+              navigation.navigate('AddingPost', {
+                club: club,
+                fetchPosts: fetchPosts,
+              })
+            }
           />
         </View>
       )}

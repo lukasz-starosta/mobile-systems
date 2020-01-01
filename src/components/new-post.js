@@ -14,7 +14,7 @@ import storage from '../api/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 
-function NewPost({ navigation, club, loading }) {
+function NewPost({ navigation, club, loading, fetchPosts }) {
   const [post, setPost] = useState({
     club_id: club.uid,
     content: '',
@@ -83,6 +83,8 @@ function NewPost({ navigation, club, loading }) {
       }
 
       await database.addPost({ ...post, images: imageUrls });
+
+      await fetchPosts();
 
       loading.setFalse();
       navigation.navigate('ClubDetails', club);
