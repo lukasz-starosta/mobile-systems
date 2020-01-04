@@ -94,7 +94,7 @@ function EditProfileScreen({ navigation }) {
     });
   };
 
-  const checkIfChanged = async () => {
+  const getDataToBeChanged = async () => {
     let newData = {};
     if (image.uri != '') {
       const url = await uploadImage(image.uri);
@@ -110,7 +110,7 @@ function EditProfileScreen({ navigation }) {
   const handleProfileEdition = () => {
     const editProfile = async () => {
       setLoading(true);
-      const dataToBeChanged = await checkIfChanged();
+      const dataToBeChanged = await getDataToBeChanged();
       await database.updateUser(user.uid, dataToBeChanged);
       await fetchUserById();
       setLoading(false);
