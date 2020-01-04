@@ -27,6 +27,8 @@ const SignUpScreen = ({ navigation }) => {
   });
   const [errors, setErrors] = useState([]);
 
+  const url = 'https://i.imgur.com/2y3Sm4x.jpg';
+
   const updateErrors = message => {
     setErrors(rest => {
       return [...rest, message];
@@ -51,6 +53,7 @@ const SignUpScreen = ({ navigation }) => {
               faculty: data.faculty,
               degree: data.degree,
               uid: user.uid,
+              avatar: url
             });
           })
           .catch(error => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ScreenContainer from '../layout/screen-container';
 import {
   View,
   ScrollView,
@@ -8,9 +9,8 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import ScreenContainer from '../layout/screen-container';
-import Form from '../components/form';
 import colors from '../constants/colors';
+import Form from '../components/form';
 import ImagePicker from 'react-native-image-picker';
 import storage from '../api/storage';
 import database from '../api/database';
@@ -18,24 +18,22 @@ import RNFetchBlob from 'rn-fetch-blob';
 import LoadingStatus from '../components/loading';
 import { FacultiesSelect } from '../components/faculties-select';
 
-const CreateClubScreen = ({ navigation, user }) => {
-  const [club, setClub] = useState({
-    name: '',
-    contact_email: '',
-    description: '',
-    faculty: '',
-    icon: '',
-    web_page: '',
+function EditProfileScreen({ navigation }) {
+  const { user, fetchUserById } = navigation.state.params;
+  const [data, setData] = useState({
+    name: user.name,
+    surname: user.surname,
+    faculty: user.faculty,
+    degree: user.degree,
   });
   const [image, setImage] = useState({
     uri: '',
-    src:
-      'http://d310a9hpolx59w.cloudfront.net/product_photos/61275063/file_fe49049719_original.jpg',
+    src: user.avatar
   });
   const [loading, setLoading] = useState(false);
 
   const options = {
-    title: 'Wybierz ikonę koła',
+    title: 'Wybierz zdjęcie profilowe',
     storageOptions: {
       skipBackup: true,
       path: 'images',
@@ -79,7 +77,7 @@ const CreateClubScreen = ({ navigation, user }) => {
           return await storage.upload(
             blob,
             { contentType: mime },
-            club.name + '_icon',
+            user.name + '_profile_picture',
           );
         })
         .then(url => {
@@ -96,71 +94,61 @@ const CreateClubScreen = ({ navigation, user }) => {
     });
   };
 
-  const handleClubCreation = () => {
-    const createClub = async () => {
+  const getDataToBeChanged = async () => {
+    let newData = {};
+    if (image.uri != '') {
+      const url = await uploadImage(image.uri);
+      newData.avatar = url;
+    }
+    if (data.name != user.name) { newData.name = data.name };
+    if (data.surname != user.surname) { newData.surname = data.surname };
+    if (data.faculty != user.faculty) { newData.faculty = data.faculty };
+    if (data.degree != user.degree) { newData.degree = data.degree };
+    return newData;
+  }
+
+  const handleProfileEdition = () => {
+    const editProfile = async () => {
       setLoading(true);
-
-      const url = image.uri ? await uploadImage(image.uri) : image.src;
-
-      const clubId = await database.addClub({ ...club, icon: url });
-
-      await database.addMember({
-        club_id: clubId,
-        user_id: user.uid,
-        status: 'founder',
-      });
-
-      navigation.navigate('Favorites');
+      const dataToBeChanged = await getDataToBeChanged();
+      await database.updateUser(user.uid, dataToBeChanged);
+      await fetchUserById();
       setLoading(false);
+      navigation.goBack();
     };
-    createClub();
+    editProfile();
   };
 
   if (loading) return <LoadingStatus />;
 
   return (
     <ScreenContainer noStyle>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps='always'>
         <View style={{ marginTop: 5, marginBottom: 40 }}>
           <Form
-            title="Stwórz klub"
-            button={{ title: 'Stwórz', onPress: handleClubCreation }}
+            title="Edytuj profil"
+            button={{ title: 'Edytuj', onPress: handleProfileEdition }}
             styleProps={styles.form}>
             <View>
-              <Text style={styles.label}>NAZWA</Text>
+              <Text style={styles.label}>IMIĘ</Text>
               <TextInput
                 style={styles.input}
+                value={data.name}
                 onChangeText={text => {
-                  setClub(rest => {
+                  setData(rest => {
                     return { ...rest, name: text };
                   });
                 }}
               />
             </View>
             <View>
-              <Text style={styles.label}>MAIL KONTAKTOWY</Text>
+              <Text style={styles.label}>NAZWISKO</Text>
               <TextInput
                 style={styles.input}
+                value={data.surname}
                 onChangeText={text => {
-                  setClub(rest => {
-                    return { ...rest, contact_email: text };
-                  });
-                }}
-              />
-            </View>
-            <View>
-              <Text style={styles.label}>OPIS</Text>
-              <TextInput
-                multiline
-                scrollEnabled
-                style={{
-                  ...styles.input,
-                  height: 60,
-                  textAlignVertical: 'bottom',
-                }}
-                onChangeText={text => {
-                  setClub(rest => {
-                    return { ...rest, description: text };
+                  setData(rest => {
+                    return { ...rest, surname: text };
                   });
                 }}
               />
@@ -169,23 +157,28 @@ const CreateClubScreen = ({ navigation, user }) => {
               <Text style={styles.label}>WYDZIAŁ</Text>
               <FacultiesSelect
                 style={styles.input}
-                selectedOption={club.faculty}
-                onSelect={opt => setClub(rest => ({ ...rest, faculty: opt }))}
-              />
-            </View>
-            <View>
-              <Text style={styles.label}>STRONA INTERNETOWA</Text>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => {
-                  setClub(rest => {
-                    return { ...rest, web_page: text };
+                selectedOption={data.faculty}
+                onSelect={text => {
+                  setData(rest => {
+                    return { ...rest, faculty: text };
                   });
                 }}
               />
             </View>
             <View>
-              <Text style={styles.label}>IKONA KOŁA</Text>
+              <Text style={styles.label}>KIERUNEK</Text>
+              <TextInput
+                style={styles.input}
+                value={data.degree}
+                onChangeText={text => {
+                  setData(rest => {
+                    return { ...rest, degree: text };
+                  });
+                }}
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>ZDJĘCIE PROFILOWE</Text>
               <View>
                 <TouchableWithoutFeedback onPress={openImagePicker}>
                   <Image source={{ uri: image.src }} style={styles.icon} />
@@ -197,7 +190,7 @@ const CreateClubScreen = ({ navigation, user }) => {
       </ScrollView>
     </ScreenContainer>
   );
-};
+}
 
 const styles = StyleSheet.create({
   form: {
@@ -224,4 +217,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateClubScreen;
+export default EditProfileScreen;

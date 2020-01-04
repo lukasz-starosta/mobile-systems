@@ -110,6 +110,7 @@ function NewPost({ navigation, club, loading, fetchPosts }) {
               multiline
               scrollEnabled
               style={styles.contentStyle}
+              placeholder="Tekst..."
               onChangeText={text => {
                 setPost(previous => {
                   return { ...previous, content: text };
