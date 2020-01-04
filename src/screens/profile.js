@@ -11,7 +11,7 @@ function ProfileScreen({ navigation, user }) {
 
   return (
     <ScreenContainer title="Profil">
-      <ProfileInfo navigation={navigation} user={user}/>
+      <ProfileInfo navigation={navigation} user={user} />
       <View style={{ ...styles.bottom, bottom: statusBarHeight + 10 }}>
         <Button title="Wyloguj" onPress={() => firebase.auth().signOut()} />
       </View>

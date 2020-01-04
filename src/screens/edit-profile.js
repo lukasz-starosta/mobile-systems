@@ -30,7 +30,6 @@ function EditProfileScreen({ navigation }) {
     uri: '',
     src: user.avatar
   });
-  const [changedData, setChangedData] = useState({});
   const [loading, setLoading] = useState(false);
 
   const options = {
@@ -94,26 +93,28 @@ function EditProfileScreen({ navigation }) {
         });
     });
   };
-  
+
   const checkIfChanged = async () => {
-    if(image.uri != ''){
+    let newData = {};
+    if (image.uri != '') {
       const url = await uploadImage(image.uri);
-      setChangedData(rest => {return {...rest, avatar: url}});
+      newData.avatar = url;
     }
-    if (data.name != user.name) {setChangedData(rest => {return {...rest, name: data.name}})};
-    if (data.surname != user.surname) {setChangedData(rest => {return {...rest, surname: data.surname}})};
-    if (data.faculty != user.faculty) {setChangedData(rest => {return {...rest, faculty: data.faculty}})};
-    if (data.degree != user.degree) {setChangedData(rest => {return {...rest, degree: data.degree}})};
+    if (data.name != user.name) { newData.name = data.name };
+    if (data.surname != user.surname) { newData.surname = data.surname };
+    if (data.faculty != user.faculty) { newData.faculty = data.faculty };
+    if (data.degree != user.degree) { newData.degree = data.degree };
+    return newData;
   }
 
   const handleProfileEdition = () => {
     const editProfile = async () => {
       setLoading(true);
-      await checkIfChanged(); 
-      await database.updateUser(user.uid, changedData);
-      fetchUserById();
-      setLoading(false);  
-      // navigation.goBack();
+      const dataToBeChanged = await checkIfChanged();
+      await database.updateUser(user.uid, dataToBeChanged);
+      await fetchUserById();
+      setLoading(false);
+      navigation.goBack();
     };
     editProfile();
   };
@@ -133,11 +134,11 @@ function EditProfileScreen({ navigation }) {
               <TextInput
                 style={styles.input}
                 value={data.name}
-              onChangeText={text => {
-                setData(rest => {
-                  return { ...rest, name: text };
-                });
-              }}
+                onChangeText={text => {
+                  setData(rest => {
+                    return { ...rest, name: text };
+                  });
+                }}
               />
             </View>
             <View>
@@ -145,11 +146,11 @@ function EditProfileScreen({ navigation }) {
               <TextInput
                 style={styles.input}
                 value={data.surname}
-              onChangeText={text => {
-                setData(rest => {
-                  return { ...rest, surname: text };
-                });
-              }}
+                onChangeText={text => {
+                  setData(rest => {
+                    return { ...rest, surname: text };
+                  });
+                }}
               />
             </View>
             <View>
@@ -169,11 +170,11 @@ function EditProfileScreen({ navigation }) {
               <TextInput
                 style={styles.input}
                 value={data.degree}
-              onChangeText={text => {
-                setData(rest => {
-                  return { ...rest, degree: text };
-                });
-              }}
+                onChangeText={text => {
+                  setData(rest => {
+                    return { ...rest, degree: text };
+                  });
+                }}
               />
             </View>
             <View>
