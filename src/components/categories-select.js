@@ -7,8 +7,8 @@ export const CategoriesSelect = ({ style, selectedOption, onSelect }) => (
     {categories.map(category => (
       <Picker.Item
         label={category.name}
-        value={category.abbr}
-        key={category.abbr}
+        value={category.name}
+        key={category.name}
       />
     ))}
   </Picker>

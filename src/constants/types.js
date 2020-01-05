@@ -17,4 +17,5 @@ export const ReadableClubStatus = {
 export const SEARCH_BY = {
   NAME: 'name',
   FACULTY: 'faculty',
+  CATEGORY: 'category',
 };

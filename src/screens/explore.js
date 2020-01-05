@@ -53,12 +53,14 @@ function ExploreScreen({ navigation, user }) {
         <SectionTitle>Kategorie</SectionTitle>
         <ScrollView
           horizontal
+          keyboardShouldPersistTaps='always'
           showsHorizontalScrollIndicator={false}
           style={styles.categoriesContainer}>
-             {categories.map(category => (
+          {categories.map(category => (
             <Category
               category={category}
-              key={category.abbr}
+              key={category.name}
+              navigation={navigation}
             />
           ))}
         </ScrollView>
