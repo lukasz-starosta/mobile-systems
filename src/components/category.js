@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Layout, Text, Avatar } from 'react-native-ui-kitten';
 
 function Category(props) {
-  const { categoryName } = props;
+  const { category } = props;
   return (
     <Layout style={styles.container}>
       <Avatar
@@ -12,7 +12,7 @@ function Category(props) {
           uri: 'https://i.imgur.com/2y3Sm4x.jpg',
         }}
       />
-      <Text style={styles.categoryName}>{categoryName}</Text>
+      <Text style={styles.categoryName}>{category.name}</Text>
     </Layout>
   );
 }

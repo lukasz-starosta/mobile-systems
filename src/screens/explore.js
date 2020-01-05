@@ -8,6 +8,7 @@ import Category from '../components/category';
 import database from '../api/database';
 import LoadingStatus from '../components/loading';
 import { faculties } from '../constants/faculties';
+import { categories } from '../constants/categories';
 import Faculty from '../components/faculty';
 
 function ExploreScreen({ navigation, user }) {
@@ -54,11 +55,12 @@ function ExploreScreen({ navigation, user }) {
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.categoriesContainer}>
-          <Category categoryName={'Informatyka'} />
-          <Category categoryName={'Nadrutach dzierganie'} />
-          <Category categoryName={'Drogi panie marianie'} />
-          <Category categoryName={'Jak przeskrolóje'} />
-          <Category categoryName={'Toco siestanie'} />
+             {categories.map(category => (
+            <Category
+              category={category}
+              key={category.abbr}
+            />
+          ))}
         </ScrollView>
       </View>
     </ScreenContainer>
