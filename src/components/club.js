@@ -5,6 +5,7 @@ import { Layout, Text, Avatar } from 'react-native-ui-kitten';
 function Club({ navigation, club }) {
   const name = (club && club.name) || 'Długa nazwa koła';
   const faculty = (club && club.faculty) || 'Jeszcze dłuższa nazwa wydziału';
+  const icon = (club && club.icon) || 'https://i.imgur.com/2y3Sm4x.jpg';
 
   return (
     <TouchableWithoutFeedback
@@ -15,7 +16,7 @@ function Club({ navigation, club }) {
         <Avatar
           style={styles.image}
           source={{
-            uri: 'https://i.imgur.com/2y3Sm4x.jpg',
+            uri: icon,
           }}
         />
         <Layout>

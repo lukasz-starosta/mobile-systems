@@ -18,7 +18,7 @@ function Faculty(props) {
         <Avatar
           style={styles.image}
           source={{
-            uri: 'https://i.imgur.com/2y3Sm4x.jpg',
+            uri: faculty.logo,
           }}
         />
         <Text numberOfLines={1} style={styles.facultyName}>
