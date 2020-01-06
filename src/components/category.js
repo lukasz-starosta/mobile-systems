@@ -1,19 +1,29 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Layout, Text, Avatar } from 'react-native-ui-kitten';
+import { SEARCH_BY } from '../constants/types';
 
 function Category(props) {
-  const { categoryName } = props;
+  const { category, navigation } = props;
+
+  const handlePress = () => {
+    navigation.navigate('SearchResults', {
+      searchBy: SEARCH_BY.CATEGORY,
+      value: category.name,
+    });
+  };
   return (
-    <Layout style={styles.container}>
-      <Avatar
-        style={styles.image}
-        source={{
-          uri: 'https://i.imgur.com/2y3Sm4x.jpg',
-        }}
-      />
-      <Text style={styles.categoryName}>{categoryName}</Text>
-    </Layout>
+    <TouchableWithoutFeedback onPress={handlePress}>
+      <Layout style={styles.container}>
+        <Avatar
+          style={styles.image}
+          source={{
+            uri: 'https://i.imgur.com/2y3Sm4x.jpg',
+          }}
+        />
+        <Text numberOfLines={1} style={styles.categoryName}>{category.name}</Text>
+      </Layout>
+    </TouchableWithoutFeedback>
   );
 }
 

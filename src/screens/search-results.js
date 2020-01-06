@@ -22,6 +22,9 @@ function SearchResultsScreen({ navigation }) {
         case SEARCH_BY.FACULTY:
           setClubs(await database.getClubsOfFaculty(value));
           break;
+        case SEARCH_BY.CATEGORY:
+          setClubs(await database.getClubsOfCategory(value));
+          break;
 
         default:
           break;

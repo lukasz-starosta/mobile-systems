@@ -17,6 +17,7 @@ import database from '../api/database';
 import RNFetchBlob from 'rn-fetch-blob';
 import LoadingStatus from '../components/loading';
 import { FacultiesSelect } from '../components/faculties-select';
+import { CategoriesSelect } from '../components/categories-select';
 
 const CreateClubScreen = ({ navigation, user }) => {
   const [club, setClub] = useState({
@@ -171,6 +172,14 @@ const CreateClubScreen = ({ navigation, user }) => {
                 style={styles.input}
                 selectedOption={club.faculty}
                 onSelect={opt => setClub(rest => ({ ...rest, faculty: opt }))}
+              />
+            </View>
+            <View>
+              <Text style={styles.label}>Kategoria</Text>
+              <CategoriesSelect
+                style={styles.input}
+                selectedOption={club.category}
+                onSelect={opt => setClub(rest => ({ ...rest, category: opt }))}
               />
             </View>
             <View>
