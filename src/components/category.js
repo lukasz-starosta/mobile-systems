@@ -18,10 +18,12 @@ function Category(props) {
         <Avatar
           style={styles.image}
           source={{
-            uri: 'https://i.imgur.com/2y3Sm4x.jpg',
+            uri: category.icon,
           }}
         />
-        <Text numberOfLines={1} style={styles.categoryName}>{category.name}</Text>
+        <Text numberOfLines={1} style={styles.categoryName}>
+          {category.name}
+        </Text>
       </Layout>
     </TouchableWithoutFeedback>
   );
