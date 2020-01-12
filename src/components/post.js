@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { Layout, Text } from 'react-native-ui-kitten';
-import { TouchableWithoutFeedback } from 'react-native';
+import colors from '../constants/colors';
 
 function Post({ post, navigation }) {
   const clubName = (post && post.clubName) || false;
@@ -17,23 +17,22 @@ function Post({ post, navigation }) {
   };
 
   return (
-    <Layout style={styles.container}>
-      {clubName && <Text style={styles.clubName}>{clubName}</Text>}
-      <Text style={styles.postTitle}>{(post && post.title) || 'Tytuł'}</Text>
-      <Layout>
-        <Text style={styles.postContent}>
-          {(post && contentPreview()) ||
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse in posuere nunc. Proin laoreet placerat quam...'}
-          <TouchableWithoutFeedback>
-            <Text
-              style={styles.seeMore}
-              onPress={() => navigation.navigate('WholePost', post)}>
-              Zobacz więcej...
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate('WholePost', post)}>
+      <Layout style={styles.container}>
+        {clubName && <Text style={styles.clubName}>{clubName}</Text>}
+        <Text style={styles.postTitle}>{(post && post.title) || 'Tytuł'}</Text>
+        <Layout>
+          <Layout>
+            <Text style={styles.postContent}>
+              {(post && contentPreview()) ||
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse in posuere nunc. Proin laoreet placerat quam...'}
             </Text>
-          </TouchableWithoutFeedback>
-        </Text>
+          </Layout>
+          <Text style={styles.seeMore}>Zobacz więcej...</Text>
+        </Layout>
       </Layout>
-    </Layout>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -42,21 +41,23 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   clubName: {
-    fontSize: 18,
-    color: '#575757',
+    fontSize: 14,
+    color: colors.politechnika,
   },
   postTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#363636',
     marginVertical: 4,
   },
   postContent: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#5a5a5a',
+    display: 'flex',
+    flexDirection: 'column',
   },
   seeMore: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#a39e9e',
   },
 });
