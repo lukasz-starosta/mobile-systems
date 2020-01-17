@@ -13,6 +13,10 @@ function DashboardScreen({ navigation, user }) {
   const [clubs, setClubs] = useState([]);
   const [posts, setPosts] = useState([]);
 
+  navigation.addListener('willFocus', () => {
+    fetchPosts();
+  });
+
   const orderPosts = array => {
     return array
       .slice()
@@ -63,9 +67,11 @@ function DashboardScreen({ navigation, user }) {
     <ScreenContainer title="Tablica" scrollable>
       <SectionTitle>Najnowsze ogłoszenia</SectionTitle>
       {posts.length > 0 ? (
-        posts.slice(0,3).map(post => (
-          <Post key={post.uid} navigation={navigation} post={post} />
-        ))
+        posts
+          .slice(0, 3)
+          .map(post => (
+            <Post key={post.uid} navigation={navigation} post={post} />
+          ))
       ) : (
         <Text>Nie jesteś członkiem żadnych kół</Text>
       )}
