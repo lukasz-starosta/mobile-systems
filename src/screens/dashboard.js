@@ -48,13 +48,13 @@ function DashboardScreen({ navigation, user }) {
       _posts.push(...expandedPosts);
     }
 
-    setPosts(await orderPosts(_posts));
+    setPosts(orderPosts(_posts));
   };
 
   useEffect(() => {
     const fetchData = async () => {
       setClubs(await database.getClubsOfFaculty(user.faculty));
-      fetchPosts();
+      await fetchPosts();
       setLoading(false);
     };
 
@@ -73,7 +73,7 @@ function DashboardScreen({ navigation, user }) {
             <Post key={post.uid} navigation={navigation} post={post} />
           ))
       ) : (
-        <Text>Nie jesteś członkiem żadnych kół</Text>
+        <Text>Nie jesteś członkiem żadnych kół lub nie ma nowych postów</Text>
       )}
       <SectionTitle>Proponowane koła</SectionTitle>
       {clubs.slice(0, 3).map(club => (
