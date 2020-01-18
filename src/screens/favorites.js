@@ -12,12 +12,12 @@ function FavoritesScreen({ navigation, user }) {
   const [loading, setLoading] = useState(true);
   const [clubs, setClubs] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setClubs(await database.getClubsOfUser(user.uid));
-      setLoading(false);
-    };
+  const fetchData = async () => {
+    setClubs(await database.getClubsOfUser(user.uid));
+    setLoading(false);
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -36,7 +36,7 @@ function FavoritesScreen({ navigation, user }) {
         <CustomButton
           title="Załóż koło"
           onPress={() => {
-            navigation.navigate('CreateClub');
+            navigation.navigate('CreateClub', fetchData);
           }}
         />
       </View>
