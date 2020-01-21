@@ -20,6 +20,8 @@ import { FacultiesSelect } from '../components/faculties-select';
 import { CategoriesSelect } from '../components/categories-select';
 
 const CreateClubScreen = ({ navigation, user }) => {
+  const reloadClubs = navigation.state.params;
+
   const [club, setClub] = useState({
     name: '',
     contact_email: '',
@@ -111,8 +113,9 @@ const CreateClubScreen = ({ navigation, user }) => {
         status: 'founder',
       });
 
-      navigation.navigate('Favorites');
+      reloadClubs();
       setLoading(false);
+      navigation.goBack();
     };
     createClub();
   };
@@ -124,7 +127,7 @@ const CreateClubScreen = ({ navigation, user }) => {
       <ScrollView>
         <View style={{ marginTop: 5, marginBottom: 40 }}>
           <Form
-            title="Stwórz klub"
+            title="Stwórz koło"
             button={{ title: 'Stwórz', onPress: handleClubCreation }}
             styleProps={styles.form}>
             <View>
