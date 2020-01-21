@@ -46,7 +46,7 @@ const CreateClubScreen = ({ navigation, user }) => {
   };
 
   const openImagePicker = () => {
-    ImagePicker.showImagePicker(options, response => {
+    ImagePicker.launchImageLibrary(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
