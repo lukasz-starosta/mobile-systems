@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'MobileSystems' do
-  # Pods for MobileSystems
+target 'Circulus' do
+  # Pods for Circulus
   pod 'React', :path => '../node_modules/react-native/'
   pod 'React-Core', :path => '../node_modules/react-native/React'
   pod 'React-DevSupport', :path => '../node_modules/react-native/React'
@@ -27,7 +27,7 @@ target 'MobileSystems' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  target 'MobileSystemsTests' do
+  target 'CirculusTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -35,10 +35,10 @@ target 'MobileSystems' do
   use_native_modules!
 end
 
-target 'MobileSystems-tvOS' do
-  # Pods for MobileSystems-tvOS
+target 'Circulus-tvOS' do
+  # Pods for Circulus-tvOS
 
-  target 'MobileSystems-tvOSTests' do
+  target 'Circulus-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

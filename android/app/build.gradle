@@ -128,12 +128,12 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.mobilesystems"
+        applicationId "com.circulus"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         vectorDrawables.useSupportLibrary = true
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.3"
     }
     splits {
         abi {
