@@ -1,4 +1,4 @@
-package com.circulus;
+package com.mobilesystems;
 
 import com.facebook.react.ReactActivity;
 
