@@ -27,7 +27,7 @@ const SignUpScreen = ({ navigation }) => {
   });
   const [errors, setErrors] = useState([]);
 
-  const url = 'https://i.imgur.com/2y3Sm4x.jpg';
+  const url = 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png';
 
   const updateErrors = message => {
     setErrors(rest => {
@@ -53,7 +53,7 @@ const SignUpScreen = ({ navigation }) => {
               faculty: data.faculty,
               degree: data.degree,
               uid: user.uid,
-              avatar: url
+              avatar: url,
             });
           })
           .catch(error => {
@@ -68,8 +68,8 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="position" enabled>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <KeyboardAvoidingView behavior="position" enabled>
         <Layout>
           <Form
             title="Rejestracja"
@@ -169,8 +169,8 @@ const SignUpScreen = ({ navigation }) => {
             </View>
           </Form>
         </Layout>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
