@@ -27,7 +27,7 @@ const SignUpScreen = ({ navigation }) => {
   });
   const [errors, setErrors] = useState([]);
 
-  const url = 'http://s3.amazonaws.com/37assets/svn/765-default-avatar.png';
+  const url = 'https://s3.amazonaws.com/37assets/svn/765-default-avatar.png';
 
   const updateErrors = message => {
     setErrors(rest => {

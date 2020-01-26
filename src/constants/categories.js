@@ -7,7 +7,7 @@ export const categories = [
   {
     name: 'Mechanika',
     icon:
-      'http://www.klinikamechanika.pl/images/klinika-dobrego-mechanika_phone1.jpg?crc=4039233064',
+      's://www.klinikamechanika.pl/images/klinika-dobrego-mechanika_phone1.jpg?crc=4039233064',
   },
   {
     name: 'Sport',
@@ -26,7 +26,7 @@ export const categories = [
   },
   {
     name: 'Rysunek',
-    icon: 'http://kurs-rysunku.pl/images/kwadraty/wzornictwo3.png',
+    icon: 'https://kurs-rysunku.pl/images/kwadraty/wzornictwo3.png',
   },
   {
     name: 'Pojazdy',
