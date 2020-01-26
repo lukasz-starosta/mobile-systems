@@ -19,7 +19,7 @@ export const faculties = [
   {
     abbr: 'WCH',
     name: 'Wydział Chemiczny',
-    logo: 'http://lsn.p.lodz.pl/images/logo-w3.jpg',
+    logo: 'https://lsn.p.lodz.pl/images/logo-w3.jpg',
   },
   {
     abbr: 'WTMWT',
@@ -39,12 +39,12 @@ export const faculties = [
   {
     abbr: 'WZIP',
     name: 'Wydział Zarządzania i Inżynierii Produkcji',
-    logo: 'http://wzip.p.lodz.pl/wp-content/uploads/2017/06/logo_OiZ.jpg',
+    logo: 'https://wzip.p.lodz.pl/wp-content/uploads/2017/06/logo_OiZ.jpg',
   },
   {
     abbr: 'WIPOŚ',
     name: 'Wydział Inżynierii Procesowej i Ochrony Środowiska',
-    logo: 'http://www.wipos.p.lodz.pl/images_/photo/obraz183.jpg',
+    logo: 'https://www.wipos.p.lodz.pl/images_/photo/obraz183.jpg',
   },
   {
     abbr: 'IFE',

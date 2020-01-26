@@ -33,7 +33,7 @@ const CreateClubScreen = ({ navigation, user }) => {
   const [image, setImage] = useState({
     uri: '',
     src:
-      'http://d310a9hpolx59w.cloudfront.net/product_photos/61275063/file_fe49049719_original.jpg',
+      'https://d310a9hpolx59w.cloudfront.net/product_photos/61275063/file_fe49049719_original.jpg',
   });
   const [loading, setLoading] = useState(false);
 
