@@ -15,12 +15,7 @@ function Faculty(props) {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <Layout style={styles.container}>
-        <Avatar
-          style={styles.image}
-          source={{
-            uri: faculty.logo,
-          }}
-        />
+        <Avatar style={styles.image} source={faculty.logo} />
         <Text numberOfLines={1} style={styles.facultyName}>
           {faculty.name}
         </Text>
