@@ -15,12 +15,7 @@ function Category(props) {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <Layout style={styles.container}>
-        <Avatar
-          style={styles.image}
-          source={{
-            uri: category.icon,
-          }}
-        />
+        <Avatar style={styles.image} source={category.icon} />
         <Text numberOfLines={1} style={styles.categoryName}>
           {category.name}
         </Text>
