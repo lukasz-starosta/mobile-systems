@@ -127,7 +127,7 @@ function EditProfileScreen({ navigation }) {
         <View style={{ marginTop: 5, marginBottom: 40 }}>
           <Form
             title="Edytuj profil"
-            button={{ title: 'Edytuj', onPress: handleProfileEdition }}
+            button={{ title: 'Zapisz', onPress: handleProfileEdition }}
             styleProps={styles.form}>
             <View>
               <Text style={styles.label}>IMIĘ</Text>

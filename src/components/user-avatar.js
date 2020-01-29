@@ -5,6 +5,7 @@ import { Layout, Text, Avatar } from 'react-native-ui-kitten';
 function UserAvatar({ navigation, user, subtitle, onAccept, onDecline }) {
   const name = (user && user.name) || 'Imię nazwisko';
   const faculty = (user && user.faculty) || 'Nazwa wydziału';
+  const avatar = user && user.avatar;
 
   return (
     <TouchableWithoutFeedback
@@ -15,7 +16,7 @@ function UserAvatar({ navigation, user, subtitle, onAccept, onDecline }) {
         <Avatar
           style={styles.image}
           source={{
-            uri: 'https://icon-library.net/images/103157_man_512x512.png',
+            uri: avatar,
           }}
         />
         <Layout>
